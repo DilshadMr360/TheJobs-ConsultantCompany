@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import { Link } from "react-router-dom";
+import MenuItem from '@mui/material/MenuItem';
 
 
 export default function () {
@@ -13,6 +14,14 @@ export default function () {
     const handleDateChange = (date) => {
         setSelectedDate(date);
     }
+
+    // const [selectedCountry, setSelectedCountry] = useState(''); // State to store selected country
+
+    // const handleCountryChange = (event) => {
+    //   setSelectedCountry(event.target.value); // Update selectedCountry when an option is selected
+    // };
+
+ 
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +37,9 @@ export default function () {
             <div className="bg-purple-300 min-h-screen flex items-center justify-center">
                 <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 '>
                     <div>
-                        <h4 className="text-gray-500 pb-2 border-b border-gray-500 font-bold inline-block">Book an Appointment</h4>
+                        <h4 className="text-gray-500 pb-2  font-bold inline-block">Book an Appointment</h4>
+                        <hr className="border-1 border-purple-800"/>
+                    
                     </div>
 
                     <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
@@ -58,7 +69,7 @@ export default function () {
                                         selected={selectedDate}
                                         onChange={handleDateChange}
                                         placeholderText="Select a date"
-                                        className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full'
+                                        className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-72 h-[55px]'
                                         showTimeSelect
                                         timeFormat="HH:mm"
                                         timeIntervals={15}
@@ -71,20 +82,23 @@ export default function () {
 
                         <div className='md:flex md:justify-between md:w-full'>
 
-                            <div className='md:w-6/12 md:ml-2'>
+                        <div className='md:w-6/12 md:ml-2'>
                                 <label htmlFor="prefercountry">Country</label>
+
                                 <Select
-                                    id="country"
-                                    name="country"
-                                    value=""
-                                    className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full'
-                                >
-                                    <option value="UK">UK</option>
-                                    <option value="Australia">Australia</option>
-                                    <option value="Dubai">Dubai</option>
-                                    <option value="Qatar">Qatar</option>
-                                    <option value="Quwait">Quwait</option>
-                                </Select>
+                                id="country"
+                                name="country"
+                                className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full h-[56px] '
+                                variant="outlined"
+                                defaultValue="all"
+                        >
+                            <MenuItem value="all">Canada</MenuItem>
+                            <MenuItem value="pending">Dubai</MenuItem>
+                            <MenuItem value="approved">US</MenuItem>
+                            <MenuItem value="completed">Maldives</MenuItem>
+                        </Select>
+                    
+
                             </div>
                         </div>
 

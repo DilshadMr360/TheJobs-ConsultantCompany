@@ -6,25 +6,24 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
-import Admin_header from '../components/Admin_header';
+import Consultant_header from '../components/Consultant_header';
 
 
 export default function () {
 
     return (
         <>
-            <Admin_header />
+            <Consultant_header />
 
             <div className="bg-purple-300 min-h-screen flex items-center justify-center">
                 <div className='container w-full mx-auto rounded-lg border-purple-800 bg-white border-2 px-10 py-4 md:mb-4'>
                     <div className="flex justify-end">
-                        <Select
+                    <Select
                         className='w-40'
                             variant="outlined"
                             defaultValue="all"
                         >
                             <MenuItem value="all">All Appointment</MenuItem>
-                            <MenuItem value="pending">Pending</MenuItem>
                             <MenuItem value="approved">Approved</MenuItem>
                             <MenuItem value="completed">Completed</MenuItem>
                         </Select>
@@ -36,10 +35,9 @@ export default function () {
 
                     <div className="flex space-x-4 justify-center  w-full">
         <div className="flex border-2 border-white border-b-gray-300 p-2 rounded-md w-full text-gray-500">
-         <h1 className='w-1/12'>Status</h1>
+         <h1 className='w-2/12'>Status</h1>
          <h1 className='w-2/12'>Job Seeker</h1>
-         <h1 className='w-2/12'>Appointment</h1>
-         <h1 className='w-2/12'>Consultant</h1>
+         <h1 className='w-3/12'>Appointment</h1>
          <h1 className='w-2/12' >Appoint date</h1>
          <h1 className='w-2/12 ml-4'>Action</h1>
         
@@ -52,10 +50,9 @@ export default function () {
 
     <div className="flex space-x-4 justify-center w-full text-gray-500">
         <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-        <h1 className='w-1/12'>🕑</h1>
+        <h1 className='w-2/12'>Pending</h1>
          <h1 className='w-2/12'>John Doe Phil</h1>
-         <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-         <h1 className='w-2/12'>Macclum Harris</h1>
+         <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
          <h1 className='w-2/12' >8/15/2022 18:00</h1>
 
   <div className='flex border-2 gap-5 ml-4'>
@@ -81,10 +78,9 @@ export default function () {
 
         <div className="flex space-x-4 justify-center w-full text-gray-500">
         <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-        <h1 className='w-1/12'>✅</h1>
+        <h1 className='w-2/12'>Pending</h1>
          <h1 className='w-2/12'>John Doe Phil</h1>
-         <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-         <h1 className='w-2/12'>Macclum Harris</h1>
+         <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
          <h1 className='w-2/12' >8/15/2022 18:00</h1>
 
   <div className='flex border-2 gap-5 ml-4'>
@@ -110,10 +106,9 @@ export default function () {
         {/* view row component  */}
         <div className="flex space-x-4 justify-center w-full text-gray-500">
         <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-        <h1 className='w-1/12'>🕑</h1>
+        <h1 className='w-2/12'>Approved</h1>
          <h1 className='w-2/12'>John Doe Phil</h1>
-         <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-         <h1 className='w-2/12'>Macclum Harris</h1>
+         <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
          <h1 className='w-2/12' >8/15/2022 18:00</h1>
 
   
@@ -127,10 +122,9 @@ export default function () {
         {/* view row component  */}
         <div className="flex space-x-4 justify-center w-full text-gray-500">
         <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-        <h1 className='w-1/12'>✅</h1>
+        <h1 className='w-2/12'>Pending</h1>
          <h1 className='w-2/12'>John Doe Phil</h1>
-         <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-         <h1 className='w-2/12'>Macclum Harris</h1>
+         <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
          <h1 className='w-2/12' >8/15/2022 18:00</h1>
 
   <div className='flex border-2 gap-5 ml-4'>
