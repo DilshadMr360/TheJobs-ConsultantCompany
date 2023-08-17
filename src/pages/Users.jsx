@@ -18,25 +18,31 @@ export default function () {
                 <div className='container w-full  mx-auto rounded-lg border-purple-800 bg-white border-2 px-10 py-4 md:mb-24  md:mt-1'>
 
                     <div className='flex flex-row justify-between'>
-                        <div className="flex items-start justify-start">
-                            <Select
+                        <div className="flex items-start justify-start w-40">
+                        <Select
+                                id="jobrole"
+                                name="jobrole"
+                                className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full h-[56px] '
                                 variant="outlined"
-                                defaultValue="jobrole"
-                            >
-                                <MenuItem value="jobrole">Admin</MenuItem>
-                                <MenuItem value="jobrole">Consultants</MenuItem>
-                                <MenuItem value="jobrole">Job Seekers</MenuItem>
-                            </Select>
+                                defaultValue="all"
+                        >
+                            <MenuItem value="all">User Roles</MenuItem>
+                            <MenuItem value="pending">Admin</MenuItem>
+                            <MenuItem value="approved">Consultants</MenuItem>
+                            <MenuItem value="completed">Job Seekers</MenuItem>
+                        </Select>
+
                         </div>
+
+
+                       
 
 
                         <div className="flex flex-col items-end justify-end border border-gray-300 p-3 rounded">
     <input
         type="text"
         id="search"
-        placeholder="Enter your search"
-        
-        className="placeholder:to-black"
+        placeholder="Enter your search"    
     />
 </div>
 
@@ -72,13 +78,14 @@ export default function () {
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
+                                <Link to={'/edit-users'}>
                               <button
                                     type="submit"
-                                    className="w-2/12 bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
                                 >
-                                    Edit
+                                    Edit User 
                                 </button>
-
+                                </Link>
                             </div>
 
                         </div>
@@ -87,84 +94,89 @@ export default function () {
                         {/* view row component  */}
 
                         <div className="flex space-x-4 justify-center w-full text-gray-500">
-                        <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
+                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
                                 <h1 className='w-3/12'>Albert John Pieris</h1>
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
+                                <Link to={'/edit-users'}>
                               <button
                                     type="submit"
-                                    className="w-2/12 bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
                                 >
-                                    Edit
+                                    Edit User 
                                 </button>
-
+                                </Link>
                             </div>
 
                         </div>
+
 
 
 
                         {/* view row component  */}
 
                         <div className="flex space-x-4 justify-center w-full text-gray-500">
-                        <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
+                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
                                 <h1 className='w-3/12'>Albert John Pieris</h1>
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
+                                <Link to={'/edit-users'}>
                               <button
                                     type="submit"
-                                    className="w-2/12 bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
                                 >
-                                    Edit
+                                    Edit User 
                                 </button>
-
+                                </Link>
                             </div>
 
                         </div>
 
+
+
+                               
+                           
+                        {/* view row component  */}
+
+                        <div className="flex space-x-4 justify-center w-full text-gray-500">
+                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
+                                <h1 className='w-3/12'>Albert John Pieris</h1>
+                                <h1 className='w-3/12' >john123@gmail.com</h1>
+                                <h1 className='w-2/12'>0776543216</h1>
+                                <h1 className='w-2/12'>Consultant</h1>
+                                <Link to={'/edit-users'}>
+                              <button
+                                    type="submit"
+                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                >
+                                    Edit User 
+                                </button>
+                                </Link>
+                            </div>
+
+                        </div>
 
                         {/* view row component  */}
 
                         <div className="flex space-x-4 justify-center w-full text-gray-500">
-                        <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
+                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
                                 <h1 className='w-3/12'>Albert John Pieris</h1>
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
+                                <Link to={'/edit-users'}>
                               <button
                                     type="submit"
-                                    className="w-2/12 bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
                                 >
-                                    Edit
+                                    Edit User 
                                 </button>
-
+                                </Link>
                             </div>
 
                         </div>
-
-
-
-                        {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                        <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-3/12'>Albert John Pieris</h1>
-                                <h1 className='w-3/12' >john123@gmail.com</h1>
-                                <h1 className='w-2/12'>0776543216</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                              <button
-                                    type="submit"
-                                    className="w-2/12 bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Edit
-                                </button>
-
-                            </div>
-
-                        </div>
-
 
                         {/* button */}
 

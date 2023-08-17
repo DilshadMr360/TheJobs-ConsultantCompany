@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import { Link } from "react-router-dom";
 import Admin_header from '../components/Admin_header';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function () {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -78,18 +79,31 @@ export default function () {
                             
                             <div className='md:w-6/12 md:ml-2'>
                                 <label htmlFor="prefercountry">Country</label>
+
                                 <Select
                                     id="country"
                                     name="country"
+                                    className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full h-[56px] '
+                                    variant="outlined"
+                                    defaultValue="all"
+                            >
+                                <MenuItem value="all">Canada</MenuItem>
+                                <MenuItem value="pending">Dubai</MenuItem>
+                                <MenuItem value="approved">US</MenuItem>
+                                <MenuItem value="completed">Maldives</MenuItem>
+                            </Select>
+                                {/* <Select
+                                    id="country"
+                                    name="country"
                                     value=""
-                                    className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full'
+                                    className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full h-[57px]'
                                 >
                                     <option value="UK">UK</option>
                                     <option value="Australia">Australia</option>
                                     <option value="Dubai">Dubai</option>
                                     <option value="Qatar">Qatar</option>
                                     <option value="Quwait">Quwait</option>
-                                </Select>
+                                </Select> */}
                             </div>
 
 
@@ -97,7 +111,7 @@ export default function () {
                         {/* ... (similar responsive adjustments for other form fields) */}
 
                         <div className='md:flex md:justify-between md:w-full'>
-                            <div className='mb-4 md:w-6/12 md:mr-2'>
+                            {/* <div className='mb-4 md:w-6/12 md:mr-2'>
                                 <label htmlFor="date">Date</label>
                                 <div>
                                     <DatePicker
@@ -114,7 +128,7 @@ export default function () {
                                         dateFormat="MMMM d, yyyy h:mm aa"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className='md:w-6/12 md:ml-2'>
                                 <label htmlFor="appointmentDateTime">Appointment Date & Time</label>
@@ -124,7 +138,7 @@ export default function () {
                                     selected={selectedDate}
                                     onChange={handleDateChange}
                                     placeholderText="Select a date"
-                                    className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full'
+                                    className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-72  h-[55px]'
                                     showTimeSelect
                                     timeFormat="HH:mm"
                                     timeIntervals={15}
