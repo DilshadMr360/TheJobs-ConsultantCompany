@@ -1,187 +1,310 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { Form, Link, useNavigate } from 'react-router-dom';
 import Select from '@mui/material/Select';
-import DatePicker from 'react-datepicker';
 import MenuItem from '@mui/material/MenuItem';
-import 'react-datepicker/dist/react-datepicker.css';
-import { format } from 'date-fns';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
+import Admin_header from '../components/Admin_header';
 
-const Edit_user = () => {
+const Edit_User = () => {
+  const [selectedJobRole, setSelectedJobRole] = useState('admin');
+  const [fullname, setFullName] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [phonenumber, setPhoneNumber] = useState('');
+  const [email, SetEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
+  const [specializedCountry, setSpecializedCountry] = useState('');
+  const [qualifications, setQualifications] = useState('');
+  const [jobFields, setJobFields] = useState('');
+  const [experience, setExperience] = useState('');
 
-  let navigate=useNavigate()
+  const [fullnamerror, setFullNameError] = useState('');
+  const [phonenumbererror, setPhoneNumberError] = useState('');
+  const [emailerror, setEmailError] = useState('');
+  const [passworderror, setPasswordError] = useState('');
+  const [jobTitleError, setJobTitleError] = useState('');
+  const [confirmpassworderror, setConfirmPasswordError] = useState('');
+  const [specializedCountryError, setSpecializedCountryError] = useState('');
+  const [qualificationsError, setQualificationsError] = useState('');
+  const [jobFieldsError, setJobFieldsError] = useState('');
+  const [experienceError, setExperienceError] = useState('');
 
-  const [selectedDate, setSelectedDate] = useState(null);
-
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    const formattedDate = date ? format(date, 'MMMM d, yyyy h:mm aa') : '';
-    setCustomer({ ...customer, dateofbirth: formattedDate });
+  const handleRoleChange = (event) => {
+    setSelectedJobRole(event.target.value);
   };
+
+  const validateSpecializedCountry = () => {
+    if (selectedJobRole === 'consultants' && !specializedCountry) {
+      setSpecializedCountryError('Please enter the specialized country.');
+      return false;
+    }
+    setSpecializedCountryError('');
+    return true;
+  };
+
+  const validateJobFields = () => {
+    if ((selectedJobRole === 'consultants' || selectedJobRole === 'jobSeekers') && !jobFields) {
+      setJobFieldsError('Please enter the job fields.');
+      return false;
+    }
+    setJobFieldsError('');
+    return true;
+  };
+
+  const validateQualifications = () => {
+    if (selectedJobRole === 'jobSeekers' && !qualifications) {
+      setQualificationsError('Please enter your qualifications.');
+      return false;
+    }
+    setQualificationsError('');
+    return true;
+  };
+
+  const validateExperience = () => {
+    if (selectedJobRole === 'jobSeekers' && !experience) {
+      setExperienceError('Please enter your experience.');
+      return false;
+    }
+    setExperienceError('');
+    return true;
+  };
+
   
 
-  const [customer, setCustomer] =useState({
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    fullname:"",
-    gender:"",
-    email:"",
-    phonenumber:"",
-    specialized:"",
-    dateofbirth:""
-  })
+    let valid = true;
 
-  //deconstucting
+    if (!jobTitle) {
+      setJobTitleError('Please enter your job title.');
+      valid = false;
+    }
 
-  const { fullname, gender, email, phonenumber, specialized, dateofbirth } = customer;
+    if (!fullname) {
+      setFullNameError('Please enter your Full name.');
+      valid = false;
+    }
 
+    if (!email) {
+      setEmailError('Please enter your Email.');
+      valid = false;
+    }
 
-  const onInputChange =(e) => {
-    console.log(e);
-    setCustomer({...customer,[e.target.name]:e.target.value})
-  }
+    if (!phonenumber) {
+      setPhoneNumberError('Please enter your Contact Number.');
+      valid = false;
+    }
 
+    if (!password) {
+      setPasswordError('Please enter a Password.');
+      valid = false;
+    }
 
-const onSubmit= async(e) =>{
+    if (!confirmpassword) {
+      setConfirmPasswordError('Please confirm your Password.');
+      valid = false;
+    } else if (confirmpassword !== password) {
+      setConfirmPasswordError('Passwords do not match.');
+      valid = false;
+    }
 
-}
+    if (!validateSpecializedCountry()) {
+      valid = false;
+    }
+
+    if (!validateJobFields()) {
+      valid = false;
+    }
+
+    if (!validateQualifications()) {
+      valid = false;
+    }
+
+    if (!validateExperience()) {
+      valid = false;
+    }
+
+    if (valid) {
+      // Your form submission logic here
+    }
+  };
+
   return (
-    <div>
+    <>
+      <Admin_header />
 
-   <form onSubmit={(e)=>onSubmit(e)}>
-        <div className='new_appointment_form'>
+      <div className='bg-purple-300 max-w-full h-screen'>
+        <div className="flex items-center justify-center ">
+          <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-5'>
+            <h2 className="text-lg font-semibold mb-4">Create New User</h2>
+            <div className="space-y-4">
+              <form onSubmit={handleSubmit}>
+              <div>
+                  <label htmlFor="fullname">Full Name</label>
+                  <TextField
+                    id="fullname"
+                    name="fullname"
+                    placeholder="Enter Your Full name"
+                    className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                    value={fullname}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                  {fullnamerror && <p className="text-red-500">{fullnamerror}</p>}
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <TextField
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter Your Email"
+                    className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                    value={email}
+                    onChange={(e) => SetEmail(e.target.value)}
+                  />
+                  {emailerror && <p className="text-red-500">{emailerror}</p>}
+                </div>
+                <div>
+                  <label htmlFor="phonenumber">Contact Number</label>
+                  <TextField
+                    id="phonenumber"
+                    name="phonenumber"
+                    placeholder="Enter Your Contact Number"
+                    className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                    value={phonenumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                  {phonenumbererror && <p className="text-red-500">{phonenumbererror}</p>}
+                </div>
+                <div>
+                  <label htmlFor="jobRole">Job Role:</label>
+                  <Select
+                    id="jobRole"
+                    className="border border-gray-300 p-1 w-full"
+                    value={selectedJobRole}
+                    onChange={handleRoleChange}
+                  >
+                    <MenuItem value="admin">Admin</MenuItem>
+                    <MenuItem value="consultants">Consultants</MenuItem>
+                    <MenuItem value="jobSeekers">Job Seekers</MenuItem>
+                  </Select>
+                </div>
+
+                <div>
+                      <label htmlFor='password'>Password:</label>
+                      <input
+                        type='password'
+                        id='password'
+                        className='border border-gray-300 p-1 w-full'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      {passworderror && <p className="text-red-500">{passworderror}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor='confirmpassword'>Confirm Password:</label>
+                      <input
+                        type='password'
+                        id='confirmpassword'
+                        className='border border-gray-300 p-1 w-full'
+                        value={confirmpassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                      {confirmpassworderror && <p className="text-red-500">{confirmpassworderror}</p>}
+                    </div>
             
-        <h1 className='welcome_text'> Edit User</h1>
-
-              <div className='new_appointment_form_row'>
-                
-            <label  className='appointment_row' htmlFor="FullName">Full Name </label>
-            <label className='appointment_row2' htmlFor="Gender">Gender </label>
+                {selectedJobRole === 'consultants' && (
+                  <>
+                    <div>
+                      <label htmlFor='specializedCountry'>Specialized Country:</label>
+                      <input
+                        type='text'
+                        id='specializedCountry'
+                        className='border border-gray-300 p-1 w-full'
+                        value={specializedCountry}
+                        onChange={(e) => setSpecializedCountry(e.target.value)}
+                      />
+                      {specializedCountryError && <p className="text-red-500">{specializedCountryError}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor='jobFields'>Job Fields:</label>
+                      <input
+                        type='text'
+                        id='jobFields'
+                        className='border border-gray-300 p-1 w-full'
+                        value={jobFields}
+                        onChange={(e) => setJobFields(e.target.value)}
+                      />
+                      {jobFieldsError && <p className="text-red-500">{jobFieldsError}</p>}
+                    </div>
+                  </>
+                )}
+                {selectedJobRole === 'jobSeekers' && (
+                  <>
+                    <div>
+                      <label htmlFor='qualifications'>Qualifications:</label>
+                      <input
+                        type='text'
+                        id='qualifications'
+                        className='border border-gray-300 p-1 w-full'
+                        value={qualifications}
+                        onChange={(e) => setQualifications(e.target.value)}
+                      />
+                      {qualificationsError && <p className="text-red-500">{qualificationsError}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor='experience'>Experience:</label>
+                      <input
+                        type='text'
+                        id='experience'
+                        className='border border-gray-300 p-1 w-full'
+                        value={experience}
+                        onChange={(e) => setExperience(e.target.value)}
+                      />
+                      {experienceError && <p className="text-red-500">{experienceError}</p>}
+                    </div>
+                    <div>
+                  <label htmlFor="jobtitle">Job Field:</label>
+                  <TextField
+                    id="jobtitle"
+                    name="jobtitle"
+                    placeholder="Enter Your Job Title"
+                    className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                    value={jobTitle}
+                    onChange={(e) => setJobTitle(e.target.value)}
+                  />
+                  {jobTitleError && <p className="text-red-500">{jobTitleError}</p>}
+                </div>
+                  </>
+                )}
+                {/* ... other form fields */}
+                <div className='flex flex-row justify-between md:mt-5'>
+                  <Link to={'/all-user-page'}>
+                    <button
+                      type="button"
+                      className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
+                    >
+                      Back
+                    </button>
+                  </Link>
+                  <div className='flex'>
+                    <button
+                      type="submit"
+                      className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-2 w-32"
+                    >
+                      Edit User
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div className='new_appointment_form_row'>
-            <TextField
-            id="fullname"
-            name="fullname"
-            placeholder="Enter Your Full Name"
-            className='appointment_textfield'
-            value={fullname}
-            onChange={(e)=>onInputChange(e)}
-            />
-            <TextField
-            id="gender"
-            name="gender"
-            placeholder="Gender"
-            className='appointment_textfield'
-            value={gender}
-            onChange={(e)=>onInputChange(e)}
-            />
-
-            </div>
-
-            <div className='new_appointment_form_row'>
-                
-                <label  className='appointment_row' htmlFor="Email">Email </label>
-                <label className='appointment_row2' htmlFor="PhoneNumber"> PhoneNumber </label>
-                </div>
-                <div className='new_appointment_form_row'>
-                <TextField
-                id="email"
-                name="email"
-                placeholder="Enter Your Email"
-                className='appointment_textfield'
-                value={email}
-                onChange={(e)=>onInputChange(e)}
-                />
-                <TextField
-                id="phonenumber"
-                name="phonenumber"
-                placeholder="Enter Your Phone Number"
-                className='appointment_textfield'
-                value={phonenumber}
-                onChange={(e)=>onInputChange(e)}
-                />
-    
-                </div>
-    
-
-                <div className='new_appointment_form_row'>
-                
-                <label  className='appointment_row' htmlFor="specialized">Specialized </label>
-                <label className='appointment_row2' htmlFor="dob"> Date of Birth </label>
-                </div>
-                <div className='new_appointment_form_row'>
-                <TextField
-                id="specialized"
-                name="specialized"
-                placeholder="Enter Your speciality"
-                className='appointment_textfield'
-                value={specialized}
-                onChange={(e)=>onInputChange(e)}
-                />
-         <div className="date-picker-container">
-         <DatePicker
-  id="Date"
-  name="dateofbirth"
-  selected={selectedDate ? new Date(selectedDate) : null} // Convert the string to a Date object
-  onChange={(date) => {
-    handleDateChange(date);
-  }}
-  placeholderText="Select a date"
-  className="appointment_textfield"
-  showTimeSelect
-  timeFormat="HH:mm"
-  timeIntervals={15}
-  timeCaption="Time"
-  dateFormat="MMMM d, yyyy h:mm aa"
-/>
-
-    </div>
-                
-    
-                </div>
-
-
-      <div className='new_appointment_form_row'>
-                
-                <label  className='appointment_row' htmlFor="password">Password </label>
-                <label className='appointment_row2' htmlFor="confirmpassword"> Confirm Password </label>
-                </div>
-                <div className='new_appointment_form_row'>
-                <TextField
-                id="password"
-                name="password"
-                placeholder="Enter Your Password"
-                className='appointment_textfield'
-                />
-                <TextField
-                id="confirm_password"
-                name="confirm_password"
-                placeholder="Enter Confirm Password"
-                className='appointment_textfield'
-                />
-    
-                </div>
-
-    
-    
-            <div className='appoitment-bottom-button'>
-            <Link to="/consultant-dashboard">
-                <button className="main_user_button" type="submit">
-            Back to Dashboard
-        </button>
-        </Link>
-        <button className="main_user_button" type="submit">
-          Submit 
-        </button>
+          </div>
         </div>
-        
-        </div>
-        </form>
-
-    </div>
+      </div>
+    </>
   );
-};
+}
 
-export default Edit_user;
+export default Edit_User;
