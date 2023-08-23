@@ -34,7 +34,7 @@ function App() {
         {/* <img src={logo} alt="Logo" className="logo" /> */}
         
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin_page />} />
           <Route path="/users" element={<Job_seekers_page />} />
@@ -51,6 +51,8 @@ function App() {
           <Route path="/edit-users" element={<Edit_user/>} />
           <Route path="/consultant-dashboard" element={<Consultant_main_page/>} />
           <Route path="/consultant-appointment" element={<Consultant_appointments/>} />
+          <Route path="/register-form" element={<Register/>} />
+          <Route path="/login-form" element={<Login/>} />
 
          
        
