@@ -1,11 +1,30 @@
+import axios from 'axios';
 import React ,{useState}from 'react';
 import { Link } from "react-router-dom";
 
+const logout = () => {
+  console.log("Logging out ....");
+  const headers = {
+    'Authorization': 'Bearer ' + localStorage.getItem('token') // Example authorization header
+  };
+  axios.post('http://localhost:8000/api/logout', null, {headers})
+  .then(respose => {
+    if(respose.data.success){
+      console.log("Logged out");
+      localStorage.removeItem('token');
+      // navigate to login page
+    }
+  })
+  .catch(error => {
+    console.log(error);
+  });
+}
 
 const DropdownMenu = ({ onClose }) => {
   const handleOptionClick = (option) => {
+
     // Handle option click logic here (e.g., navigate, logout, etc.)
-    onClose(); // Close the dropdown after an option is clicked
+   // Close the dropdown after an option is clicked
   };
 
   return (
@@ -20,7 +39,7 @@ const DropdownMenu = ({ onClose }) => {
       </Link>
       <div
         className="py-2 px-4 cursor-pointer transition duration-300 hover:bg-gray-200"
-        onClick={() => handleOptionClick('logout')}
+        onClick={logout}
       >
         Logout
       </div>
