@@ -27,7 +27,7 @@ const Login = (props) => {
         localStorage.setItem('token', response.data.token);
         switch (response.data.user.role){
           case 'client':
-            navigate("/users");
+            navigate("/client_dashboard");
             console.log("You are logged in as a client");
             break;
           case 'consultant':
@@ -50,49 +50,22 @@ const Login = (props) => {
 
     });
 
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!email) {
-    //   setEmailError("Please enter your email.");
-    //   return;
-    // } else if (!emailRegex.test(email)) {
-    //   setEmailError("Please enter a valid email address.");
-    //   return;
-    // } else {
-    //   setEmailError("");
-    // }
-
-    // if (!password) {
-    //   setPasswordError("Please enter your password.");
-    //   return;
-    // } else if (password.length < 8) {
-    //   setPasswordError("Password should be at least 8 characters long.");
-    //   return;
-    // } else {
-    //   setPasswordError("");
-    // }
-
-    // console.log(email);
+  
   };
 
   return (
     <>
-      <div className="bg-purple-300 h-screen pt-4">
+      <div className="bg-purple-300  h-screen pt-4">
 
-        <div>
-          <h2 className="text-purple-800 font-bold text-4xl text-center w-8/12 mx-3">
-            Login
-          </h2>
-        </div>
+        
 
         <div className="container mx-auto my-auto w-5/6 md:w-5/12 bg-white border-2 rounded-lg border-purple-800 mt-5 px-5 py-3">
-          <div>
-            <h1 className="text-gray-500 pb-2 border-b border-gray-500 font-bold inline-block">
-              Log in to an existing account
-            </h1>
-          </div>
+        <h2 className="text-purple-800 font-bold text-4xl text-center pb-5">
+            Sign In
+          </h2>
 
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-            <label htmlFor="email" className="text-gray-500">
+            <label htmlFor="email" className="text-black">
               Email
             </label>
             <input
@@ -102,11 +75,11 @@ const Login = (props) => {
               placeholder="Enter your email"
               id="email"
               name="email"
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
             />
             {emailError && <p className="text-red-500">{emailError}</p>}
 
-            <label htmlFor="password" className="text-gray-500">
+            <label htmlFor="password" className="text-black">
               Password
             </label>
             <input
@@ -116,7 +89,7 @@ const Login = (props) => {
               placeholder="***********"
               id="password"
               name="password"
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
             />
             {passwordError && <p className="text-red-500">{passwordError}</p>}
 
@@ -130,7 +103,7 @@ const Login = (props) => {
 
           <Link to={"/register-form"}>
             <button className="link-btn text-black md:mt-5">
-              Don't have an account ? Register here.
+              Don't have an account ? <span className="text-purple-800 font-bold">Register here</span> 
             </button>
           </Link>
         </div>

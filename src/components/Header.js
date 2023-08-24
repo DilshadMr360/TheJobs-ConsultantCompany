@@ -15,10 +15,10 @@ const Header = () => {
       <div className="flex items-center">
         <IoAirplaneSharp size={24} color="white" className="mr-4" />
         <IoHomeOutline size={24} color="white" className="mr-4" />
-        {/* <span className="text-black" style={styles.nameText}>Home</span> */}
+        <span className="text-white font-bold text-2xl">Wecome to Jobs</span>
       </div>
       <div className="flex items-center">
-        <span className="text-black mr-4">Mohamed Dilshad</span>
+        <span className="text-white mr-4">Mohamed Dilshad</span>
         <button onClick={handleDropdownToggle} className="flex items-center">
           <IoPersonCircleOutline size={30} color="white" />
         </button>
