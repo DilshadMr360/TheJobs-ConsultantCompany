@@ -28,12 +28,16 @@ export default function () {
 
     return (
         <>
-            <div className="user-navbar">
+           
                 <Header />
-            </div>
-
+                <div className="bg-purple-300  flex items-center justify-center">
+                <h2 className="text-purple-800 font-bold text-4xl  md:w-6/12 md:px-5 md:mt-10">
+           Hi User John
+          </h2>
+ </div>
             <div className="bg-purple-300 min-h-screen flex items-center justify-center">
-                <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 '>
+                
+                <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mb-20'>
                     <div>
                         <h4 className="text-gray-500 pb-2 border-gray-500 font-bold inline-block">Your Upcoming Appointment</h4>
                         <hr className="border-1 border-purple-800"/>

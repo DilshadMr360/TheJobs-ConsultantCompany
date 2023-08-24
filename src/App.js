@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin_page />} />
-          <Route path="/users" element={<Job_seekers_page />} />
+          <Route path="/client_dashboard" element={<Job_seekers_page />} />
           <Route path="/create-new-appointment" element={<Create_new_appointment_page />} />
           <Route path="/dashboard" element={<Job_seekers_page />} />
           <Route path="/profile-page" element={<Profile_page />} />

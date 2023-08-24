@@ -44,7 +44,7 @@ const Register = (props) => {
           localStorage.setItem('token', response.data.token);
           switch (response.data.user.role) {
             case 'client':
-              navigate("/users");
+              navigate("/client_dashboard");
               console.log("You are logged in as a client");
               break;
             case 'consultant':
@@ -73,19 +73,13 @@ const Register = (props) => {
     <>
       <div className="bg-purple-300 min-h-screen py-4">
 
-        <div>
-          <h2 className="text-purple-800 font-bold text-4xl text-center pl-16 w-8/12">Register</h2>
-
-        </div>
-
+       
 
         <div className="container mx-auto w-5/12 bg-white border-2 rounded-lg border-purple-800 mt-5 px-6 py-3">
 
-          <div>
-            <h1 className="text-gray-500 pb-2 border-b border-gray-500 font-bold inline-block">
-              Create a new Account
-            </h1>
-          </div>
+        <h2 className="text-purple-800 font-bold text-4xl text-center pb-5">
+            Sign Up
+          </h2>
 
 
           <div>
@@ -101,6 +95,8 @@ const Register = (props) => {
               id="name"
               name="name"
               placeholder="Enter full name"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
+
             />
             {nameError && <p className="text-red-500">{nameError}</p>}
             <div>
@@ -114,7 +110,7 @@ const Register = (props) => {
               placeholder="Enter your email"
               id="email"
               name="email"
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
 
             />
             {emailError && <p className="text-red-500">{emailError}</p>}
@@ -129,7 +125,7 @@ const Register = (props) => {
               name="number"
               pattern="[0-9]*"
               maxLength={10}
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
 
             />
             {numberError && <p className="text-red-500">{numberError}</p>}
@@ -142,7 +138,7 @@ const Register = (props) => {
               placeholder="***********"
               id="password"
               name="password"
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
 
             />
             {passwordError && <p className="text-red-500">{passwordError}</p>}
@@ -155,7 +151,7 @@ const Register = (props) => {
               placeholder="***********"
               id="confirm_password"
               name="confirm_password"
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
 
             />
             {confirmPasswordError && <p className="text-red-500">{confirmPasswordError}</p>}
@@ -168,9 +164,9 @@ const Register = (props) => {
             >Register</button>
           </form>
           <div className="flex flex-col md:flex-row w-full justify-center items-center md:justify-between mt-4">
-            <div className="flex flex-row w-full justify-between items-center mb-2 md:mb-0">
+            <div className="flex flex-row w-full justify-between items-center mb-2 md:mb-2">
               <Link to={'/login-form'} className="link-btn w-6/12 md:w-8/12">
-                Already have an account? Login here.
+                Already have an account? <span className="text-purple-800 font-bold">Login here</span>
               </Link>
               <label className="md:w-6/12 text-gray-500 text-center md:text-left">
             <input
