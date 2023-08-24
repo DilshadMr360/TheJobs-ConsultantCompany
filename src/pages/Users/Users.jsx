@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import TextField from '@mui/material/TextField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-import Admin_header from '../components/Admin_header';
+import Admin_header from '../../components/Admin_header';
 import axios from "axios";
 
 

@@ -27,15 +27,18 @@ const Login = (props) => {
         localStorage.setItem('token', response.data.token);
         switch (response.data.user.role){
           case 'client':
+            // navigate to client dashboard
             navigate("/client_dashboard");
             console.log("You are logged in as a client");
             break;
           case 'consultant':
-            // navigate to consultant dashboard
+            // navigate to consultant 
+            navigate("/consultant_dashboard");
             console.log("You are logged in as a consultant");
             break;
           case 'admin':
             // navigate to admin dashboard
+            navigate("/admin_dashboard");
             console.log("You are logged in as an admin");
             break;
         }
@@ -50,15 +53,14 @@ const Login = (props) => {
 
     });
 
-  
+
   };
 
   return (
     <>
       <div className="bg-purple-300  h-screen pt-4">
 
-        
-
+      
         <div className="container mx-auto my-auto w-5/6 md:w-5/12 bg-white border-2 rounded-lg border-purple-800 mt-5 px-5 py-3">
         <h2 className="text-purple-800 font-bold text-4xl text-center pb-5">
             Sign In
@@ -78,7 +80,6 @@ const Login = (props) => {
               className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
             />
             {emailError && <p className="text-red-500">{emailError}</p>}
-
             <label htmlFor="password" className="text-black">
               Password
             </label>
@@ -92,7 +93,6 @@ const Login = (props) => {
               className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
             />
             {passwordError && <p className="text-red-500">{passwordError}</p>}
-
             <button
               type="submit"
               className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300"
@@ -100,7 +100,6 @@ const Login = (props) => {
               Log In
             </button>
           </form>
-
           <Link to={"/register-form"}>
             <button className="link-btn text-black md:mt-5">
               Don't have an account ? <span className="text-purple-800 font-bold">Register here</span> 
@@ -111,5 +110,4 @@ const Login = (props) => {
     </>
   );
 };
-
 export default Login;

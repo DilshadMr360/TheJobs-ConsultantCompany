@@ -43,12 +43,38 @@ const Admin_page = (props) => {
       </div>
     </div>
 
-    <div className='text-center border-2  px-5 mt-5 pb-5'>
+    <div className='text-center border-2  px-5 mt-5 pb-5 w-full'>
       <h1 className='justify-center text-purple-950 font-bold text-2xl md:mt-5'>YOUR RECENT APPLICATIONS</h1>
       <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
 
 
-<h1 className='w-2/12'>Pending</h1>
+<h1 className='w-2/12'>🕑</h1>
+         <h1 className='w-2/12'>John Doe Phil</h1>
+         <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
+         <h1 className='w-2/12' >8/15/2022 18:00</h1>
+
+
+
+         <div className='flex  gap-5 ml-4'>
+         <button
+                                    type="submit"
+                                    className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                >
+                                    Accept
+                                </button>
+         <button
+                                    type="submit"
+                                    className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                >
+                                    Reject
+                                </button>
+                                </div>
+</div>
+
+<div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
+
+
+<h1 className='w-2/12'>✅</h1>
          <h1 className='w-2/12'>John Doe Phil</h1>
          <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
          <h1 className='w-2/12' >8/15/2022 18:00</h1>

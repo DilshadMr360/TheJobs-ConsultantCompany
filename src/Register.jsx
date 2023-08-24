@@ -73,14 +73,13 @@ const Register = (props) => {
     <>
       <div className="bg-purple-300 min-h-screen py-4">
 
-       
+
 
         <div className="container mx-auto w-5/12 bg-white border-2 rounded-lg border-purple-800 mt-5 px-6 py-3">
 
-        <h2 className="text-purple-800 font-bold text-4xl text-center pb-5">
+          <h2 className="text-purple-800 font-bold text-4xl text-center pb-5">
             Sign Up
           </h2>
-
 
           <div>
 
@@ -169,34 +168,24 @@ const Register = (props) => {
                 Already have an account? <span className="text-purple-800 font-bold">Login here</span>
               </Link>
               <label className="md:w-6/12 text-gray-500 text-center md:text-left">
-            <input
-              type="checkbox"
-              className="mr-2"
-              checked={termsAccepted}
-              onChange={(e) => {
-                setTermsAccepted(e.target.checked);
-                setTermsError(''); // Clear terms error when checkbox is clicked
-              }}
-            />
-            I accept the terms of use
-          {termsError && <p className="text-red-500">{termsError}</p>}
-          </label>
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={termsAccepted}
+                  onChange={(e) => {
+                    setTermsAccepted(e.target.checked);
+                    setTermsError(''); // Clear terms error when checkbox is clicked
+                  }}
+                />
+                I accept the terms of use
+                {termsError && <p className="text-red-500">{termsError}</p>}
+              </label>
             </div>
           </div>
-
-
-
         </div>
-
       </div>
     </>
-
-
-
   )
 
-
-
 }
-
 export default Register;

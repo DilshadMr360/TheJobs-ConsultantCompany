@@ -28,12 +28,22 @@ const Admin_page = (props) => {
 
     </div>
 
-    <div className='text-center border-2  px-5  mt-5 md:pb-5'>
+    <div className='text-center border-2  px-5  mt-5 md:pb-5 w-full '>
       <h1 className='justify-center text-purple-950 font-bold text-2xl md:mt-5'>YOUR RECENT APPLICATIONS</h1>
       <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 ">
 
 
-<h1 className='w-1/12'>Pending</h1>
+<h1 className='w-1/12'>🕑</h1>
+         <h1 className='w-4/12'>John Doe Phil</h1>
+         <h1 className='w-4/12'>UX-Designer-Iceland Booking Date</h1>
+         <h1 className='w-2/12' >8/15/2022 18:00</h1>
+
+</div>
+
+<div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 ">
+
+
+<h1 className='w-1/12'>✅</h1>
          <h1 className='w-4/12'>John Doe Phil</h1>
          <h1 className='w-4/12'>UX-Designer-Iceland Booking Date</h1>
          <h1 className='w-2/12' >8/15/2022 18:00</h1>

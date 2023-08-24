@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import TextField from '@mui/material/TextField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -66,7 +66,7 @@ export default function () {
             <div className="bg-purple-300 min-h-screen flex items-center justify-center">
                 <div className="container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 ">
                     <div>
-                        <h4 className="text-gray-500 pb-2 font-bold inline-block">Book an Appointment</h4>
+                        <h4 className="text-gray-500 pb-2 font-bold inline-block">Edit an Appointment</h4>
                         <hr className="border-1 border-purple-800" />
                     </div>
 
