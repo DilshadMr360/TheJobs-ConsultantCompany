@@ -18,7 +18,7 @@ const Consultant_header = () => {
         <Link to={'/consultant-dashboard'}>
         <span className="text-white">Dashboard</span>
         </Link>
-        <Link to={'/consultant-appointment'}>
+        <Link to={'/consultant_appointment/list'}>
         <span className="text-white">Appointments</span>
         </Link>
 

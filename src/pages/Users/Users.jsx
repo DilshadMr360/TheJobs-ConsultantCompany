@@ -80,7 +80,7 @@ export default function () {
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/edit-users'}>
+                                <Link to={'/users/edit'}>
                               <button
                                     type="submit"
                                     className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
@@ -101,7 +101,7 @@ export default function () {
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/edit-users'}>
+                                <Link to={'/users/edit'}>
                               <button
                                     type="submit"
                                     className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
@@ -124,7 +124,7 @@ export default function () {
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/edit-users'}>
+                                <Link to={'/users/edit'}>
                               <button
                                     type="submit"
                                     className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
@@ -148,7 +148,7 @@ export default function () {
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/edit-users'}>
+                                <Link to={'/users/edit'}>
                               <button
                                     type="submit"
                                     className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
@@ -168,7 +168,7 @@ export default function () {
                                 <h1 className='w-3/12' >john123@gmail.com</h1>
                                 <h1 className='w-2/12'>0776543216</h1>
                                 <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/edit-users'}>
+                                <Link to={'/users/edit'}>
                               <button
                                     type="submit"
                                     className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
@@ -183,7 +183,7 @@ export default function () {
                         {/* button */}
 
                         <div className='flex flex-row justify-between'>
-                            <Link to={'/admin'}>
+                            <Link to={'/admin_dashboard'}>
                             <button
                                 type="submit"
                                 className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
@@ -194,7 +194,7 @@ export default function () {
 
                             <div className='flex'>
 
-                            <Link to={'/add-user'}>
+                            <Link to={'/users/create'}>
 
                                 <button
                                     type="submit"

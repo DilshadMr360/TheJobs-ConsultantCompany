@@ -17,7 +17,7 @@ const logout = (navigate) => {
     })
     .catch(error => {
       console.log(error);
-    });
+  });
 };
 
 const DropdownMenu = () => {
@@ -32,7 +32,7 @@ const DropdownMenu = () => {
 
   return (
     <div className="absolute top-16 right-3 bg-purple border-2 border-gray-300 rounded-md shadow-md min-w-[180px] z-10">
-      <Link to="/profile-page">
+      <Link to="/profile">
         <div
           className="py-2 px-4 cursor-pointer transition duration-300 hover:bg-gray-200"
           onClick={() => handleOptionClick('profile')}

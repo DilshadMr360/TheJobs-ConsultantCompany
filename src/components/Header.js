@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IoAirplaneSharp, IoHomeOutline, IoPersonCircleOutline } from 'react-icons/io5'; 
 import DropdownMenu from './Dropdownmenu'; // 
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -14,7 +15,9 @@ const Header = () => {
     <div className="flex justify-between items-center">
       <div className="flex items-center">
         <IoAirplaneSharp size={24} color="white" className="mr-4" />
+        <Link to={'/client_dashboard'}>
         <IoHomeOutline size={24} color="white" className="mr-4" />
+        </Link>
         <span className="text-white font-bold text-2xl">Wecome to Jobs</span>
       </div>
       <div className="flex items-center">

@@ -39,7 +39,7 @@ export default function()  {
          <button className="user_button" type="submit">Add Users</button>
          </Link>
         <button className="user_button" type="submit">View Appointments</button>
-        <Link to="/profile-page">
+        <Link to="/profile">
         <button className="user_button" type="submit">Profile</button>
         </Link>
         <button className="user_button" type="submit">Logout</button>

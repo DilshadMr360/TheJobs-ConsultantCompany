@@ -15,13 +15,13 @@ const Admin_header = () => {
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
         <IoBriefcaseOutline size={24} color="white" className="mr-4" />
-        <Link to={'/admin'}>
+        <Link to={'/admin_dashboard'}>
         <span className="text-white">Dashboard</span>
         </Link>
-        <Link to={'/all-user-page'}>
+        <Link to={'/users/all'}>
         <span className="text-white">Users</span>
         </Link>
-        <Link to={'/appointment-list'}>
+        <Link to={'/appointments/list'}>
         <span className="text-white">Appointments</span>
         </Link>
 

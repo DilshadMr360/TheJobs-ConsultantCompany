@@ -100,7 +100,7 @@ const Login = (props) => {
               Log In
             </button>
           </form>
-          <Link to={"/register-form"}>
+          <Link to={"/register"}>
             <button className="link-btn text-black md:mt-5">
               Don't have an account ? <span className="text-purple-800 font-bold">Register here</span> 
             </button>

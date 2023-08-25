@@ -138,7 +138,7 @@ const Edit_User = () => {
       <div className='bg-purple-300 max-w-full h-screen'>
         <div className="flex items-center justify-center ">
           <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-5'>
-            <h2 className="text-lg font-semibold mb-4">Create New User</h2>
+            <h2 className="text-lg font-semibold mb-4">Edit User</h2>
             <div className="space-y-4">
               <form onSubmit={handleSubmit}>
               <div>
@@ -281,7 +281,7 @@ const Edit_User = () => {
                 )}
                 {/* ... other form fields */}
                 <div className='flex flex-row justify-between md:mt-5'>
-                  <Link to={'/all-user-page'}>
+                  <Link to={'/users/edit'}>
                     <button
                       type="button"
                       className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
@@ -294,7 +294,7 @@ const Edit_User = () => {
                       type="submit"
                       className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-2 w-32"
                     >
-                      Edit User
+                      Update User
                     </button>
                   </div>
                 </div>

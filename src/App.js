@@ -16,8 +16,9 @@ import Users from './pages/Users/Users';
 import Admin_appointment from './pages/Admin_appointment';
 import Appoinment_list from './pages/Appointments/Appoinment_list';
 import Consultant_main_page from './pages/Consultant_main_page';
-import Consultant_appointments from './pages/Consultant_appointments';
+import Consultant_appointment from './pages/Consultant_appointment';
 import Edit_appointment from './pages/Appointments/Edit_appointment';
+import Consultant_appointments_list from './pages/Consultant_appointments_list';
 
 
 
@@ -52,7 +53,7 @@ function App() {
           }
         */}
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
 
@@ -62,14 +63,15 @@ function App() {
 
           <Route path="/profile" element={<Profile_page />} />
 
-          <Route path="/admin-appointment" element={<Admin_appointment/>} />
-          <Route path="/consultant-appointment" element={<Consultant_appointments/>} />
+          <Route path="/admin_appointment" element={<Admin_appointment/>} />
+          <Route path="/consultant_appointment" element={<Consultant_appointment/>} />
 
          
           <Route path="/appointments/all" element={<All_appointments/>} />
           <Route path="/appointments/create" element={<Create_new_appointment_page />} />
           <Route path="/appointments/edit" element={<Edit_appointment/>} />
           <Route path="/appointments/list" element={<Appoinment_list/>} />
+          <Route path="/consultant_appointment/list" element={<Consultant_appointments_list/>} />
 
           <Route path="/users/create" element={<Add_user/>} />
           <Route path="/users/edit" element={<Edit_user/>} />

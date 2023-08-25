@@ -55,7 +55,7 @@ export default function () {
         }
 
         if (!selectedCountry) {
-            setCountryError('   ect a country.');
+            setCountryError('Please select a country.');
             valid = false;
         }
 
@@ -175,7 +175,7 @@ export default function () {
 
                         <div className='flex flex-row justify-between'>
                             <div className='flex justify-start'>
-                                <Link to={'/appointments/list'}>
+                                <Link to={'/consultant_appointment/list'}>
                                     <button                     
                                         type="submit"
                                         className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
