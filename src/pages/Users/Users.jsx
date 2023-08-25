@@ -1,16 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "../../components/Header";
 import TextField from '@mui/material/TextField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { Link, json, redirect } from 'react-router-dom';
 import Admin_header from '../../components/Admin_header';
 import axios from "axios";
 
-
 export default function () {
+
+    const [users, setUsers] = useState([]);
+    const fetchUsers = () => {
+        const headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        };
+        axios.get("http://localhost:8000/api/users", { headers })
+            .then(response => {
+                console.log(response.data);
+                setUsers(response.data.users);
+            })
+            .catch(error => {
+                console.log(error);
+                // display error message in UI with setError
+            });
+    }
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const deleteUser = (id) => {
+        // confirmation dialog box
+        let confirmed = true;
+        confirmed = window.confirm("Are you sure you want to delete user " + id);
+
+        if (confirmed) {
+            const headers = {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            };
+            axios.delete("http://localhost:8000/api/users/" + id, { headers })
+                .then(response => {
+                    console.log(response.data);
+                    fetchUsers();
+                    // Show succes modal
+                })
+                .catch(error => {
+                    // display error message in UI with setError
+                    console.log(error);
+                });
+        }
+    }
 
     return (
         <>
@@ -21,43 +62,38 @@ export default function () {
 
                     <div className='flex flex-row justify-between'>
                         <div className="flex items-start justify-start w-40">
-                        <Select
+                            <Select
                                 id="jobrole"
                                 name="jobrole"
                                 className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full h-[56px] '
                                 variant="outlined"
                                 defaultValue="all"
-                        >
-                            <MenuItem value="all">User Roles</MenuItem>
-                            <MenuItem value="pending">Admin</MenuItem>
-                            <MenuItem value="approved">Consultants</MenuItem>
-                            <MenuItem value="completed">Job Seekers</MenuItem>
-                        </Select>
+                            >
+                                <MenuItem value="all">User Roles</MenuItem>
+                                <MenuItem value="pending">Admin</MenuItem>
+                                <MenuItem value="approved">Consultants</MenuItem>
+                                <MenuItem value="completed">Job Seekers</MenuItem>
+                            </Select>
 
                         </div>
 
 
-                       
-
-
                         <div className="flex flex-col items-end justify-end border border-gray-300 p-3 rounded">
-    <input
-        type="text"
-        id="search"
-        placeholder="Enter your search"    
-    />
-</div>
+                            <input
+                                type="text"
+                                id="search"
+                                placeholder="Enter your search"
+                            />
+                        </div>
 
 
 
 
                     </div>
 
-                    
-
-                    <form className="flex flex-col space-y-4 ">
 
 
+                    <div className="flex flex-col space-y-4 ">
 
                         <div className="flex space-x-4 justify-center">
                             <div className="flex border-2 border-white border-b-gray-300 p-2 rounded-md w-full text-gray-500">
@@ -71,143 +107,60 @@ export default function () {
 
                         </div>
 
-
                         {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-3/12'>Albert John Pieris</h1>
-                                <h1 className='w-3/12' >john123@gmail.com</h1>
-                                <h1 className='w-2/12'>0776543216</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/users/edit'}>
-                              <button
-                                    type="submit"
-                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Edit User 
-                                </button>
-                                </Link>
+                        {users ? users.map((user) => (
+                            <div className="flex space-x-4 justify-center w-full text-gray-500">
+                                <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
+                                    <h1 className='w-3/12'>{user.name}</h1>
+                                    <h1 className='w-3/12' >{user.email}</h1>
+                                    <h1 className='w-2/12'>{user.phone}</h1>
+                                    <h1 className='w-2/12'>{user.role}</h1>
+                                    <Link to={`/users/edit/${user.id}`}>
+                                        <button
+                                            className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                        >
+                                            Edit User
+                                        </button>
+                                    </Link>
+                                    <button
+                                        className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                        onClick={() => {
+                                            deleteUser(user.id);
+                                        }}
+                                    >
+                                        Delete User
+                                    </button>
+                                </div>
                             </div>
-
-                        </div>
-
-
-                        {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-3/12'>Albert John Pieris</h1>
-                                <h1 className='w-3/12' >john123@gmail.com</h1>
-                                <h1 className='w-2/12'>0776543216</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/users/edit'}>
-                              <button
-                                    type="submit"
-                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Edit User 
-                                </button>
-                                </Link>
-                            </div>
-
-                        </div>
-
-
-
-
-                        {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-3/12'>Albert John Pieris</h1>
-                                <h1 className='w-3/12' >john123@gmail.com</h1>
-                                <h1 className='w-2/12'>0776543216</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/users/edit'}>
-                              <button
-                                    type="submit"
-                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Edit User 
-                                </button>
-                                </Link>
-                            </div>
-
-                        </div>
-
-
-
-                               
-                           
-                        {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-3/12'>Albert John Pieris</h1>
-                                <h1 className='w-3/12' >john123@gmail.com</h1>
-                                <h1 className='w-2/12'>0776543216</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/users/edit'}>
-                              <button
-                                    type="submit"
-                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Edit User 
-                                </button>
-                                </Link>
-                            </div>
-
-                        </div>
-
-                        {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-3/12'>Albert John Pieris</h1>
-                                <h1 className='w-3/12' >john123@gmail.com</h1>
-                                <h1 className='w-2/12'>0776543216</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                                <Link to={'/users/edit'}>
-                              <button
-                                    type="submit"
-                                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Edit User 
-                                </button>
-                                </Link>
-                            </div>
-
-                        </div>
-
+                        )) : "No users"}
                         {/* button */}
 
                         <div className='flex flex-row justify-between'>
                             <Link to={'/admin_dashboard'}>
-                            <button
-                                type="submit"
-                                className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
-                            >
-                                 Dashboard
-                            </button>
+                                <button
+                                    type="submit"
+                                    className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
+                                >
+                                    Dashboard
+                                </button>
                             </Link>
 
                             <div className='flex'>
 
-                            <Link to={'/users/create'}>
+                                <Link to={'/users/create'}>
 
-                                <button
-                                    type="submit"
-                                    className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Create a user
-                                </button>
+                                    <button
+                                        type="submit"
+                                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                    >
+                                        Create a user
+                                    </button>
                                 </Link>
 
                             </div>
                         </div>
 
-                    </form>
+                    </div>
 
                 </div>
             </div>
