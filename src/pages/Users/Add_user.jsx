@@ -8,6 +8,8 @@ import axios from "axios";
 
 
 import Admin_header from '../../components/Admin_header';
+import SelectInput from '@mui/material/Select/SelectInput';
+import { Input } from '@mui/material';
 
 const Add_user = () => {
   const [selectedRole, setSelectedRole] = useState('');
@@ -44,14 +46,14 @@ const Add_user = () => {
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/countries')
-    .then(response => {
-      setCountries(response.data.countries);
-    });
+      .then(response => {
+        setCountries(response.data.countries);
+      });
 
     axios.get('http://localhost:8000/api/jobs')
-    .then(response => {
-      setJobs(response.data.jobs);
-    });
+      .then(response => {
+        setJobs(response.data.jobs);
+      });
 
   }, []);
 
@@ -95,14 +97,14 @@ const Add_user = () => {
     if (!fullname) {
       setFullNameError('Please enter your Full name.');
       valid = false;
-    } else{
+    } else {
       setFullNameError('');
     }
 
     if (!email) {
       setEmailError('Please enter your Email.');
       valid = false;
-    } else{
+    } else {
       setEmailError('');
     }
 
@@ -112,17 +114,17 @@ const Add_user = () => {
     } else if (phonenumber.length < 10) {
       setPhoneNumberError('Phone number must be at least 10 digits.');
       valid = false;
-    } else{
+    } else {
       setPhoneNumberError('');
     }
 
     if (!password) {
       setPasswordError('Please enter a Password.');
       valid = false;
-    } else if(password.length < 8){
+    } else if (password.length < 8) {
       setPasswordError('Password must be at least 8 characters.');
       valid = false;
-    } else{
+    } else {
       setPasswordError('');
     }
 
@@ -132,14 +134,14 @@ const Add_user = () => {
     } else if (confirmpassword !== password) {
       setConfirmPasswordError('Passwords do not match.');
       valid = false;
-    } else{
+    } else {
       setConfirmPasswordError('');
     }
 
     if (selectedRole.length == 0) {
       setRoleError('Please select a user role.');
-      valid = false;      
-    } else{
+      valid = false;
+    } else {
       setRoleError('');
     }
 
@@ -162,7 +164,9 @@ const Add_user = () => {
         phone: phonenumber,
         role: selectedRole,
         password: password,
-        password_confirmation: confirmpassword
+        password_confirmation: confirmpassword,
+        jobs: selectedJobs,
+        countries: selectedCountries
       }, { headers })
         .then(response => {
           if (response.data.success) {
@@ -172,13 +176,15 @@ const Add_user = () => {
         })
         .catch(error => {
           let errors = error.response.data.errors;
-          setRoleError(errors.role ?? null)
-          setEmailError(errors.email ?? null);
-          setPhoneNumberError(errors.phone ?? null);
-          setFullNameError(errors.name ?? null);
-          setPasswordError(errors.password ?? null);
+          if(errors){
+            setRoleError(errors.role ?? null)
+            setEmailError(errors.email ?? null);
+            setPhoneNumberError(errors.phone ?? null);
+            setFullNameError(errors.name ?? null);
+            setPasswordError(errors.password ?? null);
+          }
         });
-    } else{
+    } else {
       console.log("Invalid form");
     }
   };
@@ -252,20 +258,22 @@ const Add_user = () => {
 
 
 
-                {selectedRole === 'consultants' && (
+                {selectedRole === 'consultant' && (
                   <>
                     <div>
                       <label htmlFor="specializedCountry">Specialized Country:</label>
                       <div className="flex flex-wrap gap-1">
-                        {countries.map((country) => (
-                          <label key={country.id} className="flex items-center">
-                            <Checkbox
-                              checked={selectedCountries.includes(country.id)}
-                              onChange={() => handleCountryCheckboxChange(country.id)}
-                            />
-                            {country.name}
-                          </label>
-                        ))}
+                        <Select
+                          multiple
+                          value={selectedCountries}
+                          onChange={(e) => setSelectedCountries(e.target.value)}
+                        >
+                          {countries.map((country) => (
+                            <MenuItem key={country.id} value={country.id}>
+                              {country.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
                       </div>
                       {specializedCountryError && (
                         <p className="text-red-500">{specializedCountryError}</p>
@@ -273,24 +281,24 @@ const Add_user = () => {
                     </div>
                     <div>
                       <label htmlFor="jobfields">Job Fieds:</label>
-                      <div className="flex flex-wrap gap-1">
+                      <Select
+                        multiple
+                        value={selectedJobs}
+                        onChange={(e) => setSelectedJobs(e.target.value)}
+                      >
                         {jobs.map((job) => (
-                          <label key={job.id} className="flex items-center">
-                            <Checkbox
-                              checked={selectedCountries.includes(job)}
-                              onChange={() => handleCountryCheckboxChange(job)}
-                            />
+                          <MenuItem key={job.id} value={job.id}>
                             {job.name}
-                          </label>
+                          </MenuItem>
                         ))}
-                      </div>
+                      </Select>
                       {jobFieldsError && (
                         <p className="text-red-500">{jobFieldsError}</p>
                       )}
                     </div>
                   </>
                 )}
-               
+
 
                 <div>
                   <label htmlFor='password'>Password:</label>
