@@ -74,7 +74,7 @@ function App() {
           <Route path="/consultant_appointment/list" element={<Consultant_appointments_list/>} />
 
           <Route path="/users/create" element={<Add_user/>} />
-          <Route path="/users/edit" element={<Edit_user/>} />
+          <Route path="/users/edit/:userId" element={<Edit_user/>}  />
           <Route path="/users/view" element={<View_user />} />
           <Route path="/users/all" element={<Users/>} />
 
