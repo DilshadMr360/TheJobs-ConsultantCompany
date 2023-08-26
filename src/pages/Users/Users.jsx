@@ -100,8 +100,10 @@ export default function () {
                                 <h1 className='w-3/12'>Name</h1>
                                 <h1 className='w-3/12' >Email</h1>
                                 <h1 className='w-2/12'>Contact Number</h1>
-                                <h1 className='w-2/12'>Job Role</h1>
-                                <h1 className='w-2/12'>Action</h1>
+                                <h1 className='w-1/12'>Job Role</h1>
+                         <div className="flex-1 text-right"> {/* Create a flex container that takes the remaining space and aligns content to the right */}
+            <h1 className='w-4/12'>Action</h1>
+        </div>
 
                             </div>
 
@@ -114,10 +116,10 @@ export default function () {
                                     <h1 className='w-3/12'>{user.name}</h1>
                                     <h1 className='w-3/12' >{user.email}</h1>
                                     <h1 className='w-2/12'>{user.phone}</h1>
-                                    <h1 className='w-2/12'>{user.role}</h1>
+                                    <h1 className='w-1/12'>{user.role}</h1>
                                     <Link to={`/users/edit/${user.id}`}>
                                         <button
-                                            className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                            className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-8 w-32"
                                         >
                                             Edit User
                                         </button>

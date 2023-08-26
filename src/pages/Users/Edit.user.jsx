@@ -208,7 +208,7 @@ const Edit_User = () => {
       <div className='bg-purple-300 max-w-full h-screen'>
         <div className="flex items-center justify-center ">
           <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-5'>
-            <h2 className="text-lg font-semibold mb-4">Create New User</h2>
+            <h2 className="text-lg font-semibold mb-4"> Edit User</h2>
             <div className="space-y-4">
               <form onSubmit={handleSubmit}>
                 <div>
@@ -279,6 +279,7 @@ const Edit_User = () => {
                           multiple
                           value={selectedCountries}
                           onChange={(e) => setSelectedCountries(e.target.value)}
+                          className=' w-full'
                         >
                           {countries.map((country) => (
                             <MenuItem key={country.id} value={country.id}>
@@ -297,6 +298,7 @@ const Edit_User = () => {
                         multiple
                         value={selectedJobs}
                         onChange={(e) => setSelectedJobs(e.target.value)}
+                        className=' w-full'
                       >
                         {jobs.map((job) => (
                           <MenuItem key={job.id} value={job.id}>

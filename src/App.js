@@ -16,9 +16,9 @@ import Users from './pages/Users/Users';
 import Admin_appointment from './pages/Admin_appointment';
 import Appoinment_list from './pages/Appointments/Appoinment_list';
 import Consultant_main_page from './pages/Consultant_main_page';
-import Consultant_appointment from './pages/Consultant_appointment';
+import Consultant_appointment from './pages/Appointments/Consultant_appointment';
 import Edit_appointment from './pages/Appointments/Edit_appointment';
-import Consultant_appointments_list from './pages/Consultant_appointments_list';
+import Consultant_appointments_list from './pages/Appointments/Consultant_appointments_list';
 
 
 
