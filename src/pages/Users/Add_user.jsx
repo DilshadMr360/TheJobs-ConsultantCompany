@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
@@ -43,6 +43,9 @@ const Add_user = () => {
 
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [jobs, setJobs] = useState([]);
+
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/countries')
@@ -155,9 +158,9 @@ const Add_user = () => {
 
     if (valid) {
       console.log("Creating user ....");
-      const headers = {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      };
+        const headers = {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        };
       axios.post('http://localhost:8000/api/users', {
         name: fullname,
         email: email,
@@ -171,6 +174,7 @@ const Add_user = () => {
         .then(response => {
           if (response.data.success) {
             console.log('Post Request Success');
+            navigate("/users/all")
             localStorage.removeItem('token');
           }
         })
@@ -262,11 +266,12 @@ const Add_user = () => {
                   <>
                     <div>
                       <label htmlFor="specializedCountry">Specialized Country:</label>
-                      <div className="flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-1 ">
                         <Select
                           multiple
                           value={selectedCountries}
                           onChange={(e) => setSelectedCountries(e.target.value)}
+                          className=' w-full'
                         >
                           {countries.map((country) => (
                             <MenuItem key={country.id} value={country.id}>
@@ -285,6 +290,7 @@ const Add_user = () => {
                         multiple
                         value={selectedJobs}
                         onChange={(e) => setSelectedJobs(e.target.value)}
+                          className=' w-full'
                       >
                         {jobs.map((job) => (
                           <MenuItem key={job.id} value={job.id}>

@@ -164,7 +164,7 @@ const Register = (props) => {
           </form>
           <div className="flex flex-col md:flex-row w-full justify-center items-center md:justify-between mt-4">
             <div className="flex flex-row w-full justify-between items-center mb-2 md:mb-2">
-              <Link to={'/'} className="link-btn w-6/12 md:w-8/12">
+              <Link to={'/login'} className="link-btn w-6/12 md:w-8/12">
                 Already have an account? <span className="text-purple-800 font-bold">Login here</span>
               </Link>
               <label className="md:w-6/12 text-gray-500 text-center md:text-left">
