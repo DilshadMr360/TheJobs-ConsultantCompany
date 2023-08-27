@@ -82,7 +82,7 @@ export default function () {
             valid = false;
         }
 
-        if (!jobTitle) {
+        if (!jobTitle ) {
             setJobTitleError('Please enter your job title.');
             valid = false;
         }

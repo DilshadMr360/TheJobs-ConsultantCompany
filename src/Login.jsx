@@ -22,7 +22,7 @@ const Login = (props) => {
       'password': password,
     })
     .then(response => {
-      if(response.data.success){
+      if(response.data?.success){
         console.log('Logged in');
         localStorage.setItem('token', response.data.token);
         switch (response.data.user.role){
@@ -43,7 +43,7 @@ const Login = (props) => {
             break;
         }
       } else {
-        setPasswordError(response.data.message[0]);
+        setPasswordError(response.data?.message[0]);
       }
     })
     .catch(error => {

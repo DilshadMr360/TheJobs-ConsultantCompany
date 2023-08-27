@@ -12,7 +12,7 @@ const logout = (navigate) => {
       if (response.data.success) {
         console.log("Logged out");
         localStorage.removeItem('token');
-        navigate("/");
+        navigate("/login");
       }
     })
     .catch(error => {
