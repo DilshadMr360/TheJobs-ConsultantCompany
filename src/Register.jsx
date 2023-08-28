@@ -31,31 +31,19 @@ const Register = (props) => {
       return;
     }
 
-      axios.post('http://localhost:8000/api/register', {
-        'name': name,
-        'email': email,
-        'phone': number,
-        'password': password,
-        'password_confirmation': confirmPassword
-      })
-        .then(response => {
-          if (response.data.success) {
+    axios.post('http://localhost:8000/api/register', {
+      'name': name,
+      'email': email,
+      'phone': number,
+      'password': password,
+      'password_confirmation': confirmPassword
+    })
+      .then(response => {
+        if (response.data.success) {
           console.log('Registration successful');
-          localStorage.setItem('token', response.data.token);
-          switch (response.data.user.role) {
-            case 'client':
-              navigate("/client_dashboard");
-              console.log("You are logged in as a client");
-              break;
-            case 'consultant':
-              // navigate to consultant dashboard
-              console.log("You are logged in as a consultant");
-              break;
-            case 'admin':
-              // navigate to admin dashboard
-              console.log("You are logged in as an admin");
-              break;
-          }
+          localStorage.setItem('authToken', response.data.token);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          navigate('/');
         }
       })
       .catch(error => {

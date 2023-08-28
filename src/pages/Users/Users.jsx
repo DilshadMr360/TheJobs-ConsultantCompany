@@ -14,7 +14,7 @@ export default function () {
     const [users, setUsers] = useState([]);
     const fetchUsers = () => {
         const headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
         };
         axios.get("http://localhost:8000/api/users", { headers })
             .then(response => {
@@ -38,7 +38,7 @@ export default function () {
 
         if (confirmed) {
             const headers = {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
             };
             axios.delete("http://localhost:8000/api/users/" + id, { headers })
                 .then(response => {

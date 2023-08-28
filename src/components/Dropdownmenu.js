@@ -5,13 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 const logout = (navigate) => {
   console.log("Logging out ....");
   const headers = {
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
+    'Authorization': 'Bearer ' + localStorage.getItem('authToken')
   };
   axios.post('http://localhost:8000/api/logout', null, { headers })
     .then(response => {
       if (response.data.success) {
         console.log("Logged out");
-        localStorage.removeItem('token');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
         navigate("/login");
       }
     })

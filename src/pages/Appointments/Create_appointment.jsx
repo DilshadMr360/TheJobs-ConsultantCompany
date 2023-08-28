@@ -120,6 +120,9 @@ export default function () {
                 console.error('Error saving appointment:', error);
                 // Handle error, maybe show an error message
             });
+
+
+            console.log(appointmentData.job_id + "value" );
     }
 
     const isValidEmail = (email) => {

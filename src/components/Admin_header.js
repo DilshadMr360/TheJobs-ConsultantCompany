@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Admin_header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const user = localStorage.getItem('user');
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -15,7 +16,7 @@ const Admin_header = () => {
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
         <IoBriefcaseOutline size={24} color="white" className="mr-4" />
-        <Link to={'/admin_dashboard'}>
+        <Link to={'/'}>
         <span className="text-white">Dashboard</span>
         </Link>
         <Link to={'/users/all'}>

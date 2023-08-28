@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link,redirect,useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
@@ -24,24 +24,9 @@ const Login = (props) => {
     .then(response => {
       if(response.data?.success){
         console.log('Logged in');
-        localStorage.setItem('token', response.data.token);
-        switch (response.data.user.role){
-          case 'client':
-            // navigate to client dashboard
-            navigate("/client_dashboard");
-            console.log("You are logged in as a client");
-            break;
-          case 'consultant':
-            // navigate to consultant 
-            navigate("/consultant_dashboard");
-            console.log("You are logged in as a consultant");
-            break;
-          case 'admin':
-            // navigate to admin dashboard
-            navigate("/admin_dashboard");
-            console.log("You are logged in as an admin");
-            break;
-        }
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        navigate('/')
       } else {
         setPasswordError(response.data?.message[0]);
       }

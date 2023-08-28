@@ -11,10 +11,6 @@ import axios from "axios";
 
 
 export default function () {
-
-
-
-
     return (
         <>
             <Admin_header />
@@ -179,7 +175,7 @@ export default function () {
                              </Link>
                             <div className='flex'>
 
-                          <Link to={'/admin_appointment'}>
+                          <Link to={'/appointments/create'}>
                             <button
                                 type="submit"
                                 className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
