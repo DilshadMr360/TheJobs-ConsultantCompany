@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Admin_header from '../../components/Admin_header';
 import MenuItem from '@mui/material/MenuItem';
 import axios from "axios";
@@ -26,6 +26,8 @@ export default function () {
     const [countryError, setCountryError] = useState('');
     const [jobError, setJobTitleError] = useState('');
     const [dateError, setDateError] = useState('');
+
+    const [successAlertVisible, setSuccessAlertVisible] = useState(false);
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/countries')
@@ -55,17 +57,8 @@ export default function () {
         setCountryError('');
     };
 
-    const handleEmailChange = (event) => {
-        const value = event.target.value;
-        setEmail(value);
-        setEmailError('');
-    };
+  const navigate = useNavigate();
 
-    const handleJobTitleChange = (event) => {
-        const value = event.target.value;
-        setJobTitle(value);
-        setJobTitleError('');
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -85,7 +78,7 @@ export default function () {
             valid = false;
         }
 
-        if (!jobTitle) {
+        if (!selectedJob) {
             setJobTitleError('Please enter your job title.');
             valid = false;
         }
@@ -95,9 +88,14 @@ export default function () {
             valid = false;
         }
 
+        if (!selectedconsultant ) {
+            setConsultantError('Select a Consultant.');
+            valid = false;
+        }
+
         console.log("Creating appointment ....");
         const headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
         };
 
         const appointmentData = {
@@ -111,8 +109,9 @@ export default function () {
             .then(response => {
                 if (response.data.success) {
                     console.log('Appointment saved successfully');
+                    setSuccessAlertVisible(true);
                     // Handle success, maybe redirect or show a success message
-                    // Example: navigate("/appointments/all");
+                  navigate("/appointments/list");
                     localStorage.removeItem('token');
                 }
             })
@@ -122,7 +121,7 @@ export default function () {
             });
 
 
-            console.log(appointmentData.job_id + "value" );
+            // console.log(appointmentData.job_id + "value" );
     }
 
     const isValidEmail = (email) => {
@@ -146,6 +145,20 @@ export default function () {
             <div className="user-navbar">
             </div>
 
+
+     {/* Success alert */}
+     {successAlertVisible && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+                    <strong className="font-bold">Success!</strong>
+                    <span className="block sm:inline"> Your application has been successfully created.</span>
+                    <span className="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={() => setSuccessAlertVisible(false)}>
+                        <svg className="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <title>Close</title>
+                            <path d="M14.348 14.849a1 1 0 01-1.415 1.414l-2.122-2.122-2.122 2.122a1 1 0 11-1.415-1.414l2.122-2.122-2.122-2.122a1 1 0 111.415-1.414l2.122 2.122 2.122-2.122a1 1 0 111.415 1.414l-2.122 2.122 2.122 2.122z" />
+                        </svg>
+                    </span>
+                </div>
+            )}
             <div className="bg-purple-300 min-h-screen flex items-center justify-center">
                 <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-3 '>
                     <div>

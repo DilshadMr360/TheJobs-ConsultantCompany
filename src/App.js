@@ -32,7 +32,7 @@ function App() {
           <Route path="/consultant_appointment" element={<Consultant_appointment />} />
 
          
-          <Route path="/appointments/all" element={<All_appointments />} />
+          {/* <Route path="/appointments/all" element={<All_appointments />} /> */}
           <Route path="/appointments/create" element={<Create_new_appointment_page />} />
           <Route path="/appointments/edit" element={<Edit_appointment />} />
           <Route path="/appointments/list" element={<Appoinment_list />} />

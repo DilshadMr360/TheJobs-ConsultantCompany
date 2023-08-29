@@ -8,24 +8,25 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link, json, redirect } from 'react-router-dom';
 import Admin_header from '../../components/Admin_header';
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function () {
 
     const [users, setUsers] = useState([]);
-    const fetchUsers = () => {
-        const headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-        };
-        axios.get("http://localhost:8000/api/users", { headers })
-            .then(response => {
-                console.log(response.data);
-                setUsers(response.data.users);
-            })
-            .catch(error => {
-                console.log(error);
-                // display error message in UI with setError
-            });
-    }
+        const fetchUsers = () => {
+            const headers = {
+                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+            };
+            axios.get("http://localhost:8000/api/users", { headers })
+                .then(response => {
+                    console.log(response.data);
+                    setUsers(response.data.users);
+                })
+                .catch(error => {
+                    console.log(error);
+                    // display error message in UI with setError
+                });
+        }
 
     useEffect(() => {
         fetchUsers();
@@ -34,7 +35,7 @@ export default function () {
     const deleteUser = (id) => {
         // confirmation dialog box
         let confirmed = true;
-        confirmed = window.confirm("Are you sure you want to delete user " + id);
+        // confirmed = window.confirm("Are you sure you want to delete user " + id);
 
         if (confirmed) {
             const headers = {
@@ -44,14 +45,32 @@ export default function () {
                 .then(response => {
                     console.log(response.data);
                     fetchUsers();
-                    // Show succes modal
+                    showAlert(); // Calling      directly
                 })
                 .catch(error => {
                     // display error message in UI with setError
                     console.log(error);
                 });
         }
-    }
+    };
+
+    const showAlert = () => {
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+              Swal.fire('Changes are not saved', '', 'info')
+            }
+          })
+    };
+
 
     return (
         <>

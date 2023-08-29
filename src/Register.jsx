@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const Register = (props) => {
@@ -21,6 +22,7 @@ const Register = (props) => {
 
   const [termsError, setTermsError] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [successAlertVisible, setSuccessAlertVisible] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // when the page is reloaded then going to lose  the state
@@ -43,6 +45,8 @@ const Register = (props) => {
           console.log('Registration successful');
           localStorage.setItem('authToken', response.data.token);
           localStorage.setItem('user', JSON.stringify(response.data.user));
+          // setSuccessAlertVisible(true);
+          showAlert();
           navigate('/');
         }
       })
@@ -55,7 +59,15 @@ const Register = (props) => {
 
       });
 
-  }
+  };
+
+  const showAlert = () => {
+    Swal.fire({
+        title: "Success",
+        text: "Registration successful",
+        icon: "success",
+    });
+  };
 
   return (
     <>

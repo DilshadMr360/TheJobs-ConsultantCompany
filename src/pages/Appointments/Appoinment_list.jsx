@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "../../components/Header";
 import TextField from '@mui/material/TextField';
 import DatePicker from 'react-datepicker';
@@ -11,6 +11,52 @@ import axios from "axios";
 
 
 export default function () {
+
+    const [appointments, setAppointments] = useState([]);
+
+
+    const fetchAppointments = () => {
+        const headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+        };
+        axios.get("http://localhost:8000/api/appointments", { headers })
+            .then(response => {
+                console.log(response.data);
+                setAppointments(response.data.appointments);
+            })
+            .catch(error => {
+                console.log(error);
+                // display error message in UI with setError
+            });
+    }
+
+    useEffect(() => {
+        fetchAppointments();
+    }, []);
+
+
+    const deleteAppointment = (id) => {
+        // confirmation dialog box
+        let confirmed = true;
+        confirmed = window.confirm("Are you sure you want to delete appointment " + id);
+
+        if (confirmed) {
+            const headers = {
+                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+            };
+            axios.delete("http://localhost:8000/api/appointments/" + id, { headers })
+                .then(response => {
+                    console.log(response.data);
+                    fetchAppointments();
+                    // Show succes modal
+                })
+                .catch(error => {
+                    // display error message in UI with setError
+                    console.log(error);
+                });
+        }
+    }
+
     return (
         <>
             <Admin_header />
@@ -49,33 +95,35 @@ export default function () {
 
 
         {/* view row component  */}
-
-    <div className="flex space-x-4 justify-center w-full text-gray-500">
+        {appointments ? appointments.map((appointment) => (
+    <div className="flex space-x-4 justify-center w-full text-gray-500" key={appointment.id}>
         <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-        <h1 className='w-1/12'>🕑</h1>
-         <h1 className='w-2/12'>John Doe Phil</h1>
-         <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-         <h1 className='w-2/12'>Macclum Harris</h1>
-         <h1 className='w-2/12' >8/15/2022 18:00</h1>
+            <h1 className='w-1/12'>🕑</h1>
+            <h1 className='w-2/12'>{appointment.client_id}</h1>
+            <h1 className='w-2/12'>{appointment.consultant_id}</h1>
+            <h1 className='w-2/12'>{appointment.job_id}</h1>
+            <h1 className='w-2/12' >{appointment.time}</h1>
 
-  <div className='flex border-2 gap-5 ml-4'>
-         <button
-                                    type="submit"
-                                    className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Accept
-                                </button>
-         <button
-                                    type="submit"
-                                    className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                >
-                                    Reject
-                                </button>
-                                </div>
-
+            <div className='flex border-2 gap-5 ml-4'>
+                <button
+                    type="submit"
+                    className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
+                >
+                    Accept
+                </button>
+                <button
+                    type="submit"
+                    className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
+                    onClick={() => {
+                        deleteAppointment(appointment.id);
+                    }}
+                >
+                    Reject
+                </button>
+            </div>
         </div>
-       
     </div>
+)) : "No appointments"}
 
         {/* view row component  */}
 
