@@ -184,7 +184,7 @@ const Edit_User = () => {
         .then(response => {
           if (response.data.success) {
             console.log('Post Request Success');
-            localStorage.removeItem('token');
+            // SO THIS WAS WHY AUTO DELETE TOKEN HUHHH
           }
         })
         .catch(error => {

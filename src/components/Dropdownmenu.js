@@ -28,17 +28,16 @@ const logout = (navigate) => {
   };
   axios.post('http://localhost:8000/api/logout', null, { headers })
     .then(response => {
-      if (response.data.success) {
-        console.log("Logged out");
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        showAlert(); // Calling showAlert directly
-        navigate("/login");
-      } 
+      console.log("Logged out");
     })
     .catch(error => {
       console.log(error);
   });
+
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('user');
+  // showAlert(); // Calling showAlert directly but why?wait i show u 
+  navigate("/login");
 };
 
 const DropdownMenu = () => {
