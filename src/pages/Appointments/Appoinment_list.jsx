@@ -99,11 +99,11 @@ export default function () {
     <div className="flex space-x-4 justify-center w-full text-gray-500" key={appointment.id}>
         <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
             <h1 className='w-1/12'>🕑</h1>
-            <h1 className='w-2/12'>{appointment.client_id}</h1>
-            <h1 className='w-2/12'>{appointment.consultant_id}</h1>
-            <h1 className='w-2/12'>{appointment.job_id}</h1>
-            <h1 className='w-2/12' >{appointment.time}</h1>
-
+            <h1 className='w-2/12'>{appointment.client.name}</h1>
+            <h1 className='w-2/12'>{appointment.consultant.name}</h1>
+            <h1 className='w-2/12'>{appointment.job.name}</h1>
+            <h1 className='w-2/12' >{appointment.time}</h1>   
+   
             <div className='flex border-2 gap-5 ml-4'>
                 <button
                     type="submit"
