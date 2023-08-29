@@ -44,11 +44,11 @@ const Edit_User = () => {
 
   useEffect(() => {
     const headers = {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
     };
 
-    axios.get("http://localhost:8000/api/users/" + userId, {headers})
-    .then(response => {
+    axios.get("http://localhost:8000/api/users/" + userId, { headers })
+      .then(response => {
         let user = response.data.user;
         setFullName(user.name);
         SetEmail(user.email);
@@ -56,15 +56,15 @@ const Edit_User = () => {
         setPhoneNumber(user.phone);
         setSelectedJobs(response.data.jobs);
         setSelectedCountries(response.data.countries);
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.log(error);
-    });
+      });
 
     axios.get('http://localhost:8000/api/countries')
       .then(response => {
         setCountries(response.data.countries);
-    });
+      });
 
     axios.get('http://localhost:8000/api/jobs')
       .then(response => {
@@ -168,8 +168,9 @@ const Edit_User = () => {
     if (valid) {
       console.log("Updating user ....");
       const headers = {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
       };
+      console.log(headers);
       axios.put('http://localhost:8000/api/users/' + userId, {
         name: fullname,
         email: email,
@@ -188,7 +189,7 @@ const Edit_User = () => {
         })
         .catch(error => {
           let errors = error.response.data.errors;
-          if(errors){
+          if (errors) {
             setRoleError(errors.role ?? null)
             setEmailError(errors.email ?? null);
             setPhoneNumberError(errors.phone ?? null);

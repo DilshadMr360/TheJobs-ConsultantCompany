@@ -94,7 +94,7 @@ export default function () {
 
         console.log("Creating appointment ....");
         const headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
         };
 
         const appointmentData = {

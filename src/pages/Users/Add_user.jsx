@@ -159,7 +159,7 @@ const Add_user = () => {
     if (valid) {
       console.log("Creating user ....");
         const headers = {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
         };
       axios.post('http://localhost:8000/api/users', {
         name: fullname,
