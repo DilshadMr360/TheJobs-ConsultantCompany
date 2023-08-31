@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, useParams } from 'react-router-dom';
-
+import { Link, useParams,useNavigate} from 'react-router-dom';
 import Admin_header from '../../components/Admin_header';
 import axios from 'axios';
+import Swal from "sweetalert2";
+
 
 const Edit_User = () => {
   const [selectedRole, setSelectedRole] = useState('');
@@ -19,7 +20,6 @@ const Edit_User = () => {
   const [qualifications, setQualifications] = useState('');
   const [jobFields, setJobFields] = useState('');
   const [experience, setExperience] = useState('');
-
   const [fullnamerror, setFullNameError] = useState('');
   const [phonenumbererror, setPhoneNumberError] = useState('');
   const [emailerror, setEmailError] = useState('');
@@ -41,6 +41,9 @@ const Edit_User = () => {
   const [jobs, setJobs] = useState([]);
 
   const { userId } = useParams();
+
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const headers = {
@@ -184,7 +187,9 @@ const Edit_User = () => {
         .then(response => {
           if (response.data.success) {
             console.log('Post Request Success');
-            // SO THIS WAS WHY AUTO DELETE TOKEN HUHHH
+            showAlert();
+            navigate("/users/all")
+
           }
         })
         .catch(error => {
@@ -201,6 +206,15 @@ const Edit_User = () => {
       console.log("Invalid form");
     }
   };
+
+
+  const showAlert = () => {
+    Swal.fire({
+        title: "Success",
+        text: "User Updated Succeesfully",
+        icon: "success",
+    });
+};
 
   return (
     <>

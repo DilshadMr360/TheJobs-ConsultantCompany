@@ -19,7 +19,7 @@ const Header = () => {
           <Link to={'/'}>
             <IoHomeOutline size={24} color="white" className="mr-4" />
           </Link>
-          <span className="text-white font-bold text-2xl">Wecome to Jobs</span>
+          <span className="text-white font-bold text-2xl">Jobs Consultant Company</span>
         </div>
         <div className="flex items-center">
           <span className="text-white mr-4">{user.name}</span>

@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 import Admin_header from '../../components/Admin_header';
@@ -174,6 +175,7 @@ const Add_user = () => {
         .then(response => {
           if (response.data.success) {
             console.log('Post Request Success');
+            showAlert();
             navigate("/users/all")
             localStorage.removeItem('token');
           }
@@ -192,6 +194,15 @@ const Add_user = () => {
       console.log("Invalid form");
     }
   };
+
+  const showAlert = () => {
+    Swal.fire({
+        title: "Success",
+        text: "login successful",
+        icon: "success",
+    });
+};
+
 
   return (
     <>

@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 
 const Admin_header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const user = localStorage.getItem('user');
+  // const user = localStorage.getItem('user');
+  const user = JSON.parse(localStorage.getItem('user'));
+
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -29,7 +31,7 @@ const Admin_header = () => {
 
       </div>
       <div className="flex items-center">
-        <span className="text-white mr-4">Admin</span>
+        <span className="text-white mr-4">{user.name}</span>
         <button onClick={handleDropdownToggle} className="flex items-center">
           <IoPersonCircleOutline size={30} color="white" />
         </button>

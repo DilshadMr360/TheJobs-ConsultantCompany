@@ -88,7 +88,7 @@ export default function () {
                                 variant="outlined"
                                 defaultValue="all"
                             >
-                                <MenuItem value="all">User Roles</MenuItem>
+                                <MenuItem value="all">All Users</MenuItem>
                                 <MenuItem value="pending">Admin</MenuItem>
                                 <MenuItem value="approved">Consultants</MenuItem>
                                 <MenuItem value="completed">Job Seekers</MenuItem>

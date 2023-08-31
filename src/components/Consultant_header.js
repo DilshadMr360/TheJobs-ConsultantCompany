@@ -4,7 +4,10 @@ import DropdownMenu from './Dropdownmenu'; //
 import { Link } from 'react-router-dom';
 
 const Consultant_header = () => {
+
   const [showDropdown, setShowDropdown] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -25,7 +28,7 @@ const Consultant_header = () => {
 
       </div>
       <div className="flex items-center">
-        <span className="text-white mr-4">Consutlant</span>
+        <span className="text-white mr-4">{user.name}</span>
         <button onClick={handleDropdownToggle} className="flex items-center">
           <IoPersonCircleOutline size={30} color="white" />
         </button>

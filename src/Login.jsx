@@ -9,7 +9,6 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [successAlertVisible, setSuccessAlertVisible] = useState(false);
 
   const navigate = useNavigate();
 

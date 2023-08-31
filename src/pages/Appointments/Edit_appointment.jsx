@@ -155,7 +155,7 @@ export default function () {
                                     type="submit"
                                     className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-2 w-32"
                                 >
-                                    Submit
+                                    Update
                                 </button>
                             </div>
                         </div>

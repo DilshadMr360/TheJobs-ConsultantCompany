@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Admin_header from '../../components/Admin_header';
+import axios from "axios";
+
+
 
 const Admin_dashboard = (props) => {
+
+  const [appointments, setAppointments] = useState([]);
+
+
+  const fetchAppointments = () => {
+      const headers = {
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      };
+      axios.get("http://localhost:8000/api/appointments", { headers })
+          .then(response => {
+              console.log(response.data);
+              setAppointments(response.data.appointments);
+          })
+          .catch(error => {
+              console.log(error);
+              // display error message in UI with setError
+          });
+  }
+
+  useEffect(() => {
+      fetchAppointments();
+  }, []);
+  
   return (
     <>
       <Admin_header />
@@ -43,13 +69,15 @@ const Admin_dashboard = (props) => {
 
           <div className='text-center border-2  px-5 mt-5 pb-5 w-full'>
             <h1 className='justify-center text-purple-950 font-bold text-2xl md:mt-5'>YOUR RECENT APPLICATIONS</h1>
+
+            {appointments ? appointments.map((appointment) => (
             <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
 
-
               <h1 className='w-2/12'>🕑</h1>
-              <h1 className='w-2/12'>John Doe Phil</h1>
-              <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
-              <h1 className='w-2/12' >8/15/2022 18:00</h1>
+              <h1 className='w-2/12'>{appointment.client.name}</h1>
+                                    <h1 className='w-2/12'>{appointment.consultant.name}</h1>
+                                    <h1 className='w-2/12'>{appointment.job.name}</h1>
+                                    <h1 className='w-2/12' >{appointment.time}</h1>
 
 
 
@@ -68,10 +96,10 @@ const Admin_dashboard = (props) => {
                 </button>
               </div>
             </div>
+                    )) : "No appointments"}
+
 
             <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
-
-
               <h1 className='w-2/12'>✅</h1>
               <h1 className='w-2/12'>John Doe Phil</h1>
               <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
