@@ -28,19 +28,21 @@ const Login = (props) => {
           // setSuccessAlertVisible(true);
           showAlert();
           navigate("/");
-          
         } else {
           setPasswordError(response.data?.message[0]);
         }
       })
       .catch((error) => {
-        let errors = error.response.data.errors;
-        setEmailError(errors.email ?? null);
-        setPasswordError(errors.password ?? null);
+        if(error.response.data){
+          let errors = error.response.data.errors;
+          setPasswordError('');
+          setEmailError(errors.email ?? null);
+          setPasswordError(errors.password ?? null);
+        } else{
+          setPasswordError('Unable to connect');
+        }
       });
-      
   };
-
 
   const showAlert = () => {
     Swal.fire({

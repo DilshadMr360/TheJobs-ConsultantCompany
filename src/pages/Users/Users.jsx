@@ -13,24 +13,27 @@ import Swal from "sweetalert2";
 export default function () {
 
     const [users, setUsers] = useState([]);
-        const fetchUsers = () => {
-            const headers = {
-                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-            };
-            axios.get("http://localhost:8000/api/users", { headers })
-                .then(response => {
-                    console.log(response.data);
-                    setUsers(response.data.users);
-                })
-                .catch(error => {
-                    console.log(error);
-                    // display error message in UI with setError
-                });
-        }
+    const [filterRole, setFilterRole] = useState('all');
+    const [filterSearch, setFilterSearch] = useState('');
+
+    const fetchUsers = () => {
+        const headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+        };
+        axios.get("http://localhost:8000/api/users?role=" + filterRole + "&search=" + filterSearch, { headers })
+            .then(response => {
+                console.log(response.data);
+                setUsers(response.data.users);
+            })
+            .catch(error => {
+                console.log(error);
+                // display error message in UI with setError
+            });
+    }
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [filterRole, filterSearch]);
 
     const deleteUser = (id) => {
         // confirmation dialog box
@@ -87,11 +90,13 @@ export default function () {
                                 className='border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full h-[56px] '
                                 variant="outlined"
                                 defaultValue="all"
-                            >
+                                value={filterRole}
+                                onChange={(e) => setFilterRole(e.target.value)}
+                                >
                                 <MenuItem value="all">All Users</MenuItem>
-                                <MenuItem value="pending">Admin</MenuItem>
-                                <MenuItem value="approved">Consultants</MenuItem>
-                                <MenuItem value="completed">Job Seekers</MenuItem>
+                                <MenuItem value="admin">Admin</MenuItem>
+                                <MenuItem value="consultant">Consultants</MenuItem>
+                                <MenuItem value="client">Job Seekers</MenuItem>
                             </Select>
 
                         </div>
@@ -100,17 +105,12 @@ export default function () {
                         <div className="flex flex-col items-end justify-end border border-gray-300 p-3 rounded">
                             <input
                                 type="text"
-                                id="search"
-                                placeholder="Enter your search"
+                                placeholder="Search ..."
+                                value={filterSearch}
+                                onChange={(e) => setFilterSearch(e.target.value)}
                             />
                         </div>
-
-
-
-
                     </div>
-
-
 
                     <div className="flex flex-col space-y-4 ">
 

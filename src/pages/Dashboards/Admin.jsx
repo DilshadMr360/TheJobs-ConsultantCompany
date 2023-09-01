@@ -2,125 +2,80 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Admin_header from '../../components/Admin_header';
 import axios from "axios";
+import Appointment_table from '../../components/Appointments_table';
 
 
 
 const Admin_dashboard = (props) => {
 
   const [appointments, setAppointments] = useState([]);
+  const [dashboard, setDashboard] = useState([]);
 
-
-  const fetchAppointments = () => {
-      const headers = {
-          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-      };
-      axios.get("http://localhost:8000/api/appointments", { headers })
-          .then(response => {
-              console.log(response.data);
-              setAppointments(response.data.appointments);
-          })
-          .catch(error => {
-              console.log(error);
-              // display error message in UI with setError
-          });
-  }
+  const fetchDashboard = () => {
+    const headers = {
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    };
+    axios.get("http://localhost:8000/api/dashboard", { headers })
+        .then(response => {
+            console.log(response.data);
+            setDashboard(response.data.dashboard);
+        })
+        .catch(error => {
+            console.log(error);
+            // display error message in UI with setError
+        });
+}
 
   useEffect(() => {
-      fetchAppointments();
+      fetchDashboard();
   }, []);
   
   return (
     <>
+      <div className='bg-purple-300 min-h-screen'>
       <Admin_header />
-      <div className='bg-purple-300 w-screen h-screen'>
-        <div className='flex flex-col md:flex-row'>
-          <div className='w-full md:w-3/12 md:mx-5 md:mt-5'>
-            <div className='flex flex-col md:flex-row gap-2'>
-              <div className='w-full md:w-44 py-10 px-10 bg-purple-400 rounded-lg'>
+        <div className="container mx-auto">
+          <div className='md:mx-5 md:mt-5'>
+            <div className='flex flex-wrap justify-center flex-row gap-2 md:mt-5'>
+            <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
+                <h1 className='text-center font-bold'>Total Users</h1>
+                <h1 className='text-center font-bold'>{dashboard.users_total}</h1>
+              </div>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
                 <h1 className='text-center font-bold'>Consultants</h1>
-                <h1 className='text-center font-bold'>13</h1>
+                <h1 className='text-center font-bold'>{dashboard.users_consultant}</h1>
               </div>
-              <div className='w-full md:w-44 py-10 px-10 bg-purple-400 rounded-lg'>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
                 <h1 className='text-center font-bold'>Job Seekers</h1>
-                <h1 className='text-center font-bold'>123</h1>
+                <h1 className='text-center font-bold'>{dashboard.users_client}</h1>
               </div>
-            </div>
-            <div className='flex flex-col md:flex-row gap-2 md:mt-5'>
-              <div className='w-full md:w-44 py-10 px-10 bg-purple-400 rounded-lg'>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
+                <h1 className='text-center font-bold'>Admins</h1>
+                <h1 className='text-center font-bold'>{dashboard.users_admin}</h1>
+              </div>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
                 <h1 className='text-center font-bold'>Appointments</h1>
-                <h1 className='text-center font-bold'>33</h1>
+                <h1 className='text-center font-bold'>{dashboard.appointments_count}</h1>
               </div>
-              <div className='w-full md:w-44 py-10 px-10 bg-purple-400 rounded-lg'>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
                 <h1 className='text-center font-bold'>Today</h1>
-                <h1 className='text-center font-bold'>5</h1>
+                <h1 className='text-center font-bold'>{dashboard.appointments_today}</h1>
               </div>
-            </div>
-            <div className='flex flex-col md:flex-row gap-2 md:mt-5'>
-              <div className='w-full md:w-44 py-10 px-10 bg-purple-400 rounded-lg'>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
                 <h1 className='text-center font-bold'>Approved</h1>
-                <h1 className='text-center font-bold'>13</h1>
+                <h1 className='text-center font-bold'>{dashboard.appointments_approved}</h1>
               </div>
-              <div className='w-full md:w-44 py-10 px-10 bg-purple-400 rounded-lg'>
+              <div className='py-10 bg-purple-400 rounded-lg min-w-[120px] overflow-hidden'>
                 <h1 className='text-center font-bold'>Pending</h1>
-                <h1 className='text-center font-bold'>20</h1>
+                <h1 className='text-center font-bold'>{dashboard.appointments_pending}</h1>
               </div>
             </div>
           </div>
 
-          <div className='text-center border-2  px-5 mt-5 pb-5 w-full'>
-            <h1 className='justify-center text-purple-950 font-bold text-2xl md:mt-5'>YOUR RECENT APPLICATIONS</h1>
-
-            {appointments ? appointments.map((appointment) => (
-            <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
-
-              <h1 className='w-2/12'>🕑</h1>
-              <h1 className='w-2/12'>{appointment.client.name}</h1>
-                                    <h1 className='w-2/12'>{appointment.consultant.name}</h1>
-                                    <h1 className='w-2/12'>{appointment.job.name}</h1>
-                                    <h1 className='w-2/12' >{appointment.time}</h1>
-
-
-
-              <div className='flex  gap-5 ml-4'>
-                <button
-                  type="submit"
-                  className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-                >
-                  Accept
-                </button>
-                <button
-                  type="submit"
-                  className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
-                >
-                  Reject
-                </button>
-              </div>
-            </div>
-                    )) : "No appointments"}
-
-
-            <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
-              <h1 className='w-2/12'>✅</h1>
-              <h1 className='w-2/12'>John Doe Phil</h1>
-              <h1 className='w-3/12'>UX-Designer-Iceland Booking Date</h1>
-              <h1 className='w-2/12' >8/15/2022 18:00</h1>
-
-
-
-              <div className='flex  gap-5 ml-4'>
-                <button
-                  type="submit"
-                  className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-                >
-                  Accept
-                </button>
-                <button
-                  type="submit"
-                  className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
-                >
-                  Reject
-                </button>
-              </div>
+          <div className='border-2  px-5 mt-5 pb-5 w-full'>
+            <h1 className='justify-center text-purple-950 font-bold text-2xl text-center md:mt-5'>YOUR RECENT APPLICATIONS</h1>
+            <div className="overflow-auto">
+              <Appointment_table/>
             </div>
           </div>
         </div>

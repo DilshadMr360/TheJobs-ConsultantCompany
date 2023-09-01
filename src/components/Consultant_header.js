@@ -21,7 +21,7 @@ const Consultant_header = () => {
         <Link to={'/'}>
         <span className="text-white">Dashboard</span>
         </Link>
-        <Link to={'/consultant_appointment/list'}>
+        <Link to={'/appointments/list'}>
         <span className="text-white">Appointments</span>
         </Link>
 

@@ -220,7 +220,7 @@ const Edit_User = () => {
     <>
       <Admin_header />
 
-      <div className='bg-purple-300 max-w-full h-screen'>
+      <div className='bg-purple-300 max-w-full min-h-screen'>
         <div className="flex items-center justify-center ">
           <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-5'>
             <h2 className="text-lg font-semibold mb-4"> Edit User</h2>

@@ -65,32 +65,32 @@ export default function () {
 
         let valid = true;
 
-        if (!email) {
-            setEmailError('Please enter your email.');
-            valid = false;
-        } else if (!isValidEmail(email)) {
-            setEmailError('Please enter a valid email address.');
-            valid = false;
-        }
-
         if (!selectedCountry) {
             setCountryError('Select a country.');
             valid = false;
+        } else{
+            setCountryError('');
         }
 
         if (!selectedJob) {
             setJobTitleError('Please enter your job title.');
             valid = false;
+        } else{
+            setJobTitleError('')
         }
 
         if (!selectedDate) {
             setDateError('Please select a date.');
             valid = false;
+        } else{
+            setDateError('');
         }
 
         if (!selectedconsultant ) {
             setConsultantError('Select a Consultant.');
             valid = false;
+        } else{
+            setConsultantError('');
         }
 
         console.log("Creating appointment ....");
@@ -253,10 +253,6 @@ export default function () {
 
                         <div className='md:flex md:justify-between md:w-full'>
 
-                        </div>
-
-                        <div>
-                            <h4 className="text-gray-500 pb-2 border-b border-gray-500 font-bold inline-block">Schedule</h4>
                         </div>
 
                         <div className='flex flex-row justify-between'>

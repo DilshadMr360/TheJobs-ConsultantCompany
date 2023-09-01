@@ -7,232 +7,69 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
 import Admin_header from '../../components/Admin_header';
+import Consultant_header from '../../components/Consultant_header';
 import axios from "axios";
-
+import Appointment_table from '../../components/Appointments_table';
 
 export default function () {
-
-    const [appointments, setAppointments] = useState([]);
-
-
-    const fetchAppointments = () => {
-        const headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-        };
-        axios.get("http://localhost:8000/api/appointments", { headers })
-            .then(response => {
-                console.log(response.data);
-                setAppointments(response.data.appointments);
-            })
-            .catch(error => {
-                console.log(error);
-                // display error message in UI with setError
-            });
-    }
-
-    useEffect(() => {
-        fetchAppointments();
-    }, []);
-
-
-    const deleteAppointment = (id) => {
-        // confirmation dialog box
-        let confirmed = true;
-        confirmed = window.confirm("Are you sure you want to delete appointment " + id);
-
-        if (confirmed) {
-            const headers = {
-                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-            };
-            axios.delete("http://localhost:8000/api/appointments/" + id, { headers })
-                .then(response => {
-                    console.log(response.data);
-                    fetchAppointments();
-                    // Show succes modal
-                })
-                .catch(error => {
-                    // display error message in UI with setError
-                    console.log(error);
-                });
-        }
-    }
+    const [filter, setFilter] = useState('all');
+    const user = JSON.parse(localStorage.getItem('user'));
 
     return (
         <>
-            <Admin_header />
-
-            <div className="bg-purple-300 min-h-screen flex items-center justify-center">
-                <div className='container w-full mx-auto rounded-lg border-purple-800 bg-white border-2 px-10 py-4 md:mb-4'>
-                    <div className="flex justify-end">
-                        <Select
-                            className='w-40'
-                            variant="outlined"
-                            defaultValue="all"
-                        >
-                            <MenuItem value="all">All Appointment</MenuItem>
-                            <MenuItem value="pending">Pending</MenuItem>
-                            <MenuItem value="approved">Approved</MenuItem>
-                            <MenuItem value="completed">Completed</MenuItem>
-                        </Select>
-                    </div>
-
-                    <form className="flex flex-col space-y-4 ">
-
-
-
-                        <div className="flex space-x-4 justify-center  w-full">
-                            <div className="flex border-2 border-white border-b-gray-300 p-2 rounded-md w-full text-gray-500">
-                                <h1 className='w-1/12'>Status</h1>
-                                <h1 className='w-2/12'>Job Seeker</h1>
-                                <h1 className='w-2/12'>Appointment</h1>
-                                <h1 className='w-2/12'>Consultant</h1>
-                                <h1 className='w-2/12' >Appoint date</h1>
-                                <h1 className='w-2/12 ml-4'>Action</h1>
-
-                            </div>
-
+            <div className="h-screen bg-purple-300">
+                {user.role == 'admin' ?
+                    <Admin_header />
+                    : null}
+                {user.role == 'consultant' ?
+                    <Consultant_header />
+                    : null}
+                {user.role == 'client' ?
+                    <Header />
+                    : null}
+                <div className="flex">
+                    <div className='container  w-full mx-auto rounded-lg border-purple-800 bg-white border-2 px-10 py-4 md:mb-4 mt-10 min-h-[500px]'>
+                        <div className="flex justify-end">
+                            <Select
+                                className='w-40'
+                                variant="outlined"
+                                defaultValue="all"
+                                onChange={event => {
+                                    setFilter(event.target.value);
+                                }}
+                            >
+                                <MenuItem value="all">All Appointment</MenuItem>
+                                <MenuItem value="pending">Pending</MenuItem>
+                                <MenuItem value="approved">Approved</MenuItem>
+                                <MenuItem value="completed">Completed</MenuItem>
+                            </Select>
                         </div>
 
-
-                        {/* view row component  */}
-                        {appointments ? appointments.map((appointment) => (
-                            <div className="flex space-x-4 justify-center w-full text-gray-500" key={appointment.id}>
-                                <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                    <h1 className='w-1/12'>🕑</h1>
-                                    <h1 className='w-2/12'>{appointment.client.name}</h1>
-                                    <h1 className='w-2/12'>{appointment.consultant.name}</h1>
-                                    <h1 className='w-2/12'>{appointment.job.name}</h1>
-                                    <h1 className='w-2/12' >{appointment.time}</h1>
-
-                                    <div className='flex  gap-5 ml-4'>
-                                        <button
-                                            type="submit"
-                                            className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                        >
-                                            Accept
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                            onClick={() => {
-                                                deleteAppointment(appointment.id);
-                                            }}
-                                        >
-                                            Reject
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )) : "No appointments"}
-
-                        {/* view row component  */}
-
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-1/12'>✅</h1>
-                                <h1 className='w-2/12'>John Doe Phil</h1>
-                                <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-                                <h1 className='w-2/12'>Macclum Harris</h1>
-                                <h1 className='w-2/12' >8/15/2022 18:00</h1>
-
-                                <div className='flex border-2 gap-5 ml-4'>
-                                    <button
-                                        type="submit"
-                                        className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                    >
-                                        Accept
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                    >
-                                        Reject
-                                    </button>
-                                </div>
-
-                            </div>
-
+                        <div className="flex flex-col space-y-4">
+                          <Appointment_table filter={filter}/>
                         </div>
-
-
-                        {/* view row component  */}
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-1/12'>🕑</h1>
-                                <h1 className='w-2/12'>John Doe Phil</h1>
-                                <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-                                <h1 className='w-2/12'>Macclum Harris</h1>
-                                <h1 className='w-2/12' >8/15/2022 18:00</h1>
-
-
-
-                            </div>
-
-                        </div>
-
-
-
-                        {/* view row component  */}
-                        <div className="flex space-x-4 justify-center w-full text-gray-500">
-                            <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                <h1 className='w-1/12'>✅</h1>
-                                <h1 className='w-2/12'>John Doe Phil</h1>
-                                <h1 className='w-2/12'>UX-Designer-Iceland Booking Date</h1>
-                                <h1 className='w-2/12'>Macclum Harris</h1>
-                                <h1 className='w-2/12' >8/15/2022 18:00</h1>
-
-                                <div className='flex border-2 gap-5 ml-4'>
-                                    <button
-                                        type="submit"
-                                        className="- bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                    >
-                                        Accept
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className=" bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                    >
-                                        Reject
-                                    </button>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-
-                        {/* view row component  */}
-
-
-
                         {/* button */}
-
                         <div className='flex flex-row justify-between'>
-                            <Link to={'/admin'}>
-
+                            <Link to={'/'}>
                                 <button
                                     type="submit"
-                                    className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
+                                    className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300"
                                 >
                                     Dashboard
                                 </button>
                             </Link>
                             <div className='flex'>
-
                                 <Link to={'/appointments/create'}>
                                     <button
                                         type="submit"
-                                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto"
                                     >
                                         New
                                     </button>
                                 </Link>
-
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </>
