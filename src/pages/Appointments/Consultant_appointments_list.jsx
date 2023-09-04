@@ -25,7 +25,6 @@ export default function () {
                         >
                             <MenuItem value="all">All Appointment</MenuItem>
                             <MenuItem value="approved">Approved</MenuItem>
-                            <MenuItem value="completed">Completed</MenuItem>
                         </Select>
                     </div>
 

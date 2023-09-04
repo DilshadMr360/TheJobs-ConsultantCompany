@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Header from "../../components/Header";
-import TextField from '@mui/material/TextField';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
 import Admin_header from '../../components/Admin_header';
 import Consultant_header from '../../components/Consultant_header';
-import axios from "axios";
 import Appointment_table from '../../components/Appointments_table';
 
 export default function () {
@@ -41,7 +38,6 @@ export default function () {
                                 <MenuItem value="all">All Appointment</MenuItem>
                                 <MenuItem value="pending">Pending</MenuItem>
                                 <MenuItem value="approved">Approved</MenuItem>
-                                <MenuItem value="completed">Completed</MenuItem>
                             </Select>
                         </div>
 
@@ -49,11 +45,11 @@ export default function () {
                           <Appointment_table filter={filter}/>
                         </div>
                         {/* button */}
-                        <div className='flex flex-row justify-between'>
+                        <div className='flex flex-row justify-between md:mt-5'>
                             <Link to={'/'}>
                                 <button
                                     type="submit"
-                                    className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300"
+                                    className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 w-32"
                                 >
                                     Dashboard
                                 </button>
@@ -62,9 +58,9 @@ export default function () {
                                 <Link to={'/appointments/create'}>
                                     <button
                                         type="submit"
-                                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto"
+                                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
                                     >
-                                        New
+                                        New 
                                     </button>
                                 </Link>
                             </div>

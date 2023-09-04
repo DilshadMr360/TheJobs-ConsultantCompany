@@ -159,7 +159,6 @@ const Register = (props) => {
 
             <button onClick={handleSubmit} type="submit"
               className="bg-purple-800  text-white px-4 py-2 rounded-md hover:bg-purple-950  focus:ring focus:ring-blue-300 "
-
             >Register</button>
           </form>
           <div className="flex flex-col md:flex-row w-full justify-center items-center md:justify-between mt-4">

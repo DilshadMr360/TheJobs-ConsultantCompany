@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header';
-import TextField from '@mui/material/TextField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
@@ -8,25 +6,21 @@ import { Link,useNavigate } from "react-router-dom";
 import Admin_header from '../../components/Admin_header';
 import MenuItem from '@mui/material/MenuItem';
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 export default function () {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedJob, setSelectedJob] = useState(null);
-    const [email, setEmail] = useState('');
-    const [jobTitle, setJobTitle] = useState('');
     const [countries, setCountries] = useState([]);
     const [jobs, setJobs] = useState([]);
     const [selectedconsultant, setSelectedConsultant] = useState(null);
     const [consultants, setConsultants] = useState([]);
-
     const [consultantError, setConsultantError] = useState([]);
-    const [emailError, setEmailError] = useState('');
     const [countryError, setCountryError] = useState('');
     const [jobError, setJobTitleError] = useState('');
     const [dateError, setDateError] = useState('');
-
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
 
     useEffect(() => {
@@ -93,36 +87,59 @@ export default function () {
             setConsultantError('');
         }
 
-        console.log("Creating appointment ....");
-        const headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-        };
 
-        const appointmentData = {
-            country_id: selectedCountry,
-            job_id: selectedJob,
-            consultant_id: selectedconsultant,
-            time: selectedDate
-        };
-
-        axios.post('http://localhost:8000/api/appointments', appointmentData, { headers })
-            .then(response => {
-                if (response.data.success) {
-                    console.log('Appointment saved successfully');
-                    setSuccessAlertVisible(true);
-                    // Handle success, maybe redirect or show a success message
-                  navigate("/appointments/list");
-                    localStorage.removeItem('token');
-                }
-            })
-            .catch(error => {
-                console.error('Error saving appointment:', error);
-                // Handle error, maybe show an error message
+        if (valid) {
+            // Valid form data, show the confirmation dialog
+            Swal.fire({
+              title: "Do you want to create an appointment?",
+              showCancelButton: true,
+              confirmButtonText: "Yes, add user",
+              cancelButtonText: "No, cancel",
+              icon: "question",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // User confirmed, proceed with user creation
+          
+                console.log("Creating appointment ....");
+                const headers = {
+                  'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+                };
+          
+                const appointmentData = {
+                  country_id: selectedCountry,
+                  job_id: selectedJob,
+                  consultant_id: selectedconsultant,
+                  time: selectedDate
+                };
+          
+                axios.post('http://localhost:8000/api/appointments', appointmentData, { headers })
+                  .then(response => {
+                    if (response.data.success) {
+                      console.log('Appointment saved successfully');
+                      setSuccessAlertVisible(true);
+                      // Handle success, maybe redirect or show a success message
+                      navigate("/appointments/list");
+                      localStorage.removeItem('token');
+                      showAlert(); // Call the showAlert function here
+                    }
+                  })
+                  .catch(error => {
+                    console.error('Error saving appointment:', error);
+                    // Handle error, maybe show an error message
+                  });
+              }
             });
-
-
-            // console.log(appointmentData.job_id + "value" );
-    }
+          }
+          
+          // Define showAlert function outside of the if block
+          const showAlert = () => {
+            Swal.fire({
+              title: "Success",
+              text: "Appointment created successfully",
+              icon: "success",
+            });
+          };
+        };          
 
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

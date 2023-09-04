@@ -52,7 +52,6 @@ const Login = (props) => {
     });
 };
 
-
   return (
     <>
       <div className="bg-purple-300  h-screen pt-4">
@@ -61,9 +60,7 @@ const Login = (props) => {
             Sign In
           </h2>
 
-         
-       
-
+    
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
             <label htmlFor="email" className="text-black">
               Email
@@ -98,7 +95,6 @@ const Login = (props) => {
               Log In
             </button>
           </form>
-
           <Link to={"/register"}>
             <button className="link-btn text-black md:mt-5">
               Don't have an account?{" "}
@@ -110,5 +106,4 @@ const Login = (props) => {
     </>
   );
 };
-
 export default Login;

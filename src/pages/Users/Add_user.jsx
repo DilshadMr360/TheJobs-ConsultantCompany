@@ -2,29 +2,19 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Swal from "sweetalert2";
-
-
 import Admin_header from '../../components/Admin_header';
-import SelectInput from '@mui/material/Select/SelectInput';
-import { Input } from '@mui/material';
 
 const Add_user = () => {
   const [selectedRole, setSelectedRole] = useState('');
   const [fullname, setFullName] = useState('');
-  const [jobTitle, setJobTitle] = useState('');
   const [phonenumber, setPhoneNumber] = useState('');
   const [email, SetEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
-  const [specializedCountry, setSpecializedCountry] = useState('');
-  const [qualifications, setQualifications] = useState('');
   const [jobFields, setJobFields] = useState('');
-  const [experience, setExperience] = useState('');
-
   const [fullnamerror, setFullNameError] = useState('');
   const [phonenumbererror, setPhoneNumberError] = useState('');
   const [emailerror, setEmailError] = useState('');
@@ -32,16 +22,9 @@ const Add_user = () => {
   const [roleError, setRoleError] = useState('');
   const [confirmpassworderror, setConfirmPasswordError] = useState('');
   const [specializedCountryError, setSpecializedCountryError] = useState('');
-  const [qualificationsError, setQualificationsError] = useState('');
   const [jobFieldsError, setJobFieldsError] = useState('');
-  const [experienceError, setExperienceError] = useState('');
-
-  //getting the countirs for DB  and storing it as countires
-  // store all the user selected countirs in selected countries
-
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [countries, setCountries] = useState([]);
-
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [jobs, setJobs] = useState([]);
 
@@ -76,23 +59,25 @@ const Add_user = () => {
   };
 
   const validateSpecializedCountry = () => {
-    if (selectedRole === 'consultants' && selectedCountries.length === 0) {
+    if (selectedRole === 'consultant' && selectedCountries.length === 0) {
       setSpecializedCountryError('Please select a country.');
       return false;
+    } else {
+      setSpecializedCountryError('');
+      return true;
     }
-    setSpecializedCountryError('');
-    return true;
   };
-
+  
   const validateJobFields = () => {
-    if (selectedRole === 'consultants' && !jobFields) {
+    if (selectedRole === 'consultant' && jobFields.length === 0) {
       setJobFieldsError('Please enter the job fields.');
       return false;
+    } else {
+      setJobFieldsError('');
+      return true;
     }
-    setJobFieldsError('');
-    return true;
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -158,57 +143,69 @@ const Add_user = () => {
     }
 
     if (valid) {
-      console.log("Creating user ....");
-        const headers = {
-          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-        };
-      axios.post('http://localhost:8000/api/users', {
-        name: fullname,
-        email: email,
-        phone: phonenumber,
-        role: selectedRole,
-        password: password,
-        password_confirmation: confirmpassword,
-        jobs: selectedJobs,
-        countries: selectedCountries
-      }, { headers })
-        .then(response => {
-          if (response.data.success) {
-            console.log('Post Request Success');
-            showAlert();
-            navigate("/users/all")
-            localStorage.removeItem('token');
-          }
-        })
-        .catch(error => {
-          let errors = error.response.data.errors;
-          if(errors){
-            setRoleError(errors.role ?? null)
-            setEmailError(errors.email ?? null);
-            setPhoneNumberError(errors.phone ?? null);
-            setFullNameError(errors.name ?? null);
-            setPasswordError(errors.password ?? null);
-          }
-        });
-    } else {
-      console.log("Invalid form");
-    }
-  };
-
-  const showAlert = () => {
+    // Valid form data, show the confirmation dialog
     Swal.fire({
-        title: "Success",
-        text: "login successful",
-        icon: "success",
+      title: "Do you want to add this user?",
+      showCancelButton: true,
+      confirmButtonText: "Yes, add user",
+      cancelButtonText: "No, cancel",
+      icon: "question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed, proceed with user creation
+        console.log("Creating user ....");
+        const headers = {
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        };
+        axios
+          .post("http://localhost:8000/api/users", {
+            name: fullname,
+            email: email,
+            phone: phonenumber,
+            role: selectedRole,
+            password: password,
+            password_confirmation: confirmpassword,
+            jobs: selectedJobs,
+            countries: selectedCountries,
+          }, { headers })
+          .then((response) => {
+            if (response.data.success) {
+              console.log("Post Request Success");
+              showAlert();
+              navigate("/users/all");
+              localStorage.removeItem("token");
+            }
+          })
+          .catch((error) => {
+            let errors = error.response.data.errors;
+            if (errors) {
+              setRoleError(errors.role ?? null);
+              setEmailError(errors.email ?? null);
+              setPhoneNumberError(errors.phone ?? null);
+              setFullNameError(errors.name ?? null);
+              setPasswordError(errors.password ?? null);
+            }
+          });
+      }
     });
+  } else {
+    console.log("Invalid form");
+  }
 };
 
+const showAlert = () => {
+  Swal.fire({
+    title: "Success",
+    text: "User created successfully",
+    icon: "success",
+  });
+};
 
   return (
     <>
       <Admin_header />
 
-      <div className='bg-purple-300 max-w-full h-screen'>
+      <div className='bg-purple-300 max-w-full min-h-screen'>
         <div className="flex items-center justify-center ">
           <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-5'>
             <h2 className="text-lg font-semibold mb-4">Create New User</h2>

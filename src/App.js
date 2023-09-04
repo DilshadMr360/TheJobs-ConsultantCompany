@@ -44,6 +44,7 @@ function App() {
               <Appoinment_list />
             </ProtectedRoute>
           }></Route>
+          
 
           <Route path='/users/create' element={
             <ProtectedRoute user={token}>
@@ -66,18 +67,37 @@ function App() {
           }></Route>
 
 
-
-          <Route path='/users/all' element={
+<Route path='/users/all' element={
             <ProtectedRoute user={token}>
               <Users />
             </ProtectedRoute>
           }></Route>
 
 
+
+          <Route path='/appointments/createclient' element={
+            <ProtectedRoute user={token}>
+              <Consultant_appointment />
+            </ProtectedRoute>
+          }></Route>
+
+
+<Route path='/appointments/createconsultant' element={
+            <ProtectedRoute user={token}>
+              <Consultant_appointment />
+            </ProtectedRoute>
+          }></Route>
+
+
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile_page />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/appointments/list" element={<Appoinment_list />} />
+          {/* <Route path="/appointments/createconsultant" element={<Appoinment_list />} />
+          <Route path="/appointments/createclient" element={<Appoinment_list />} /> */}
+
         </Routes>
       </div>
     </Router>

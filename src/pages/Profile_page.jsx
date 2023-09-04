@@ -1,208 +1,275 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "../components/Header";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Link, useParams,useNavigate} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import Swal from "sweetalert2";
 
 const Profile_page = (props) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullname, setFullName] = useState('');
+  const [phonenumber, setPhoneNumber] = useState('');
+  const [email, SetEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
+  const [jobFields, setJobFields] = useState('');
+  const [experience, setExperience] = useState('');
+  const [fullnamerror, setFullNameError] = useState('');
+  const [phonenumbererror, setPhoneNumberError] = useState('');
+  const [emailerror, setEmailError] = useState('');
+  const [passworderror, setPasswordError] = useState('');
+  const [confirmpassworderror, setConfirmPasswordError] = useState('');
 
-  const [fullNameError, setFullNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [contactNumberError, setContactNumberError] = useState('');
-  const [currentPasswordError, setCurrentPasswordError] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-  const handleUpdateProfile = () => {
-    if (!fullName.trim()) {
-      setFullNameError('Please enter your Full Name.');
+  //getting the countirs for DB  and storing it as countires
+  // store all the user selected countirs in selected countries
+
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
+
+  const [selectedJobs, setSelectedJobs] = useState([]);
+  const [jobs, setJobs] = useState([]);
+
+  const { userId } = useParams();
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const headers = {
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    };
+
+    axios.get("http://localhost:8000/api/users/" + userId, { headers })
+      .then(response => {
+        let user = response.data.user;
+        setFullName(user.name);
+        SetEmail(user.email);
+        setPhoneNumber(user.phone);
+        setSelectedJobs(response.data.jobs);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios.get('http://localhost:8000/api/countries')
+      .then(response => {
+        setCountries(response.data.countries);
+      });
+
+    axios.get('http://localhost:8000/api/jobs')
+      .then(response => {
+        setJobs(response.data.jobs);
+      });
+  }, []);
+
+  const handleCountryCheckboxChange = (country) => {
+    if (selectedCountries.includes(country)) {
+      setSelectedCountries(selectedCountries.filter((c) => c !== country));
+    } else {
+      setSelectedCountries([...selectedCountries, country]);
+    }
+  };
+
+  const handleRoleChange = (event) => {
+    setSelectedCountries([]);
+    setJobFields('');
+  };
+
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let valid = true;
+
+    if (!fullname) {
+      setFullNameError('Please enter your Full name.');
+      valid = false;
     } else {
       setFullNameError('');
     }
 
-    if (!email.trim()) {
+    if (!email) {
       setEmailError('Please enter your Email.');
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError('Please enter a valid Email.');
+      valid = false;
     } else {
       setEmailError('');
     }
 
-   if (!contactNumber) {
-  setContactNumberError('Please enter your Contact Number.');
-} else if (!/^\d{10}$/.test(contactNumber)) {
-  setContactNumberError('Please enter a valid 10-digit contact number.');
-} else if (!/^[0-9]*$/.test(contactNumber)) {
-  setContactNumberError('Please enter numeric characters only.');
-} else {
-  setContactNumberError('');
-}
-
-    // Continue with the update profile logic
-  };
-
-  const handleUpdatePassword = () => {
-    if (!currentPassword.trim()) {
-      setCurrentPasswordError('Please enter your current password.');
-    } else if (currentPassword.trim().length < 8) {
-      setCurrentPasswordError('Password must be at least 8 characters.');
+    if (!phonenumber) {
+      setPhoneNumberError('Please enter your Contact Number.');
+      valid = false;
+    } else if (phonenumber.length < 10) {
+      setPhoneNumberError('Phone number must be at least 10 digits.');
+      valid = false;
     } else {
-      setCurrentPasswordError('');
+      setPhoneNumberError('');
     }
-  
-    if (!newPassword.trim()) {
-      setNewPasswordError('Please enter a new password.');
-    } else if (newPassword.trim().length < 8) {
-      setNewPasswordError('Password must be at least 8 characters.');
+
+    if (password && password.length < 8) {
+      setPasswordError('Password must be at least 8 characters.');
+      valid = false;
     } else {
-      setNewPasswordError('');
+      setPasswordError('');
     }
-  
-    if (!confirmPassword.trim()) {
-      setConfirmPasswordError('Please confirm your password.');
-    } else if (newPassword !== confirmPassword) {
+
+    if (password && !confirmpassword) {
+      setConfirmPasswordError('Please confirm your Password.');
+      valid = false;
+    } else if (password && confirmpassword !== password) {
       setConfirmPasswordError('Passwords do not match.');
+      valid = false;
     } else {
       setConfirmPasswordError('');
     }
+
+    
+    if (valid) {
+      console.log("Updating user ....");
+      const headers = {
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      };
+      console.log(headers);
+      axios.put('http://localhost:8000/api/users/' + userId, {
+        name: fullname,
+        email: email,
+        phone: phonenumber,
+        password: password,
+        password_confirmation: confirmpassword,
+        jobs: selectedJobs,
+        countries: selectedCountries
+      }, { headers })
+        .then(response => {
+          if (response.data.success) {
+            console.log('Post Request Success');
+            showAlert();
+            navigate("/users/all")
+
+          }
+        })
+        .catch(error => {
+          let errors = error.response.data.errors;
+          if (errors) {
+            setEmailError(errors.email ?? null);
+            setPhoneNumberError(errors.phone ?? null);
+            setFullNameError(errors.name ?? null);
+            setPasswordError(errors.password ?? null);
+          }
+        });
+    } else {
+      console.log("Invalid form");
+    }
   };
-  
+
+
+  const showAlert = () => {
+    Swal.fire({
+        title: "Success",
+        text: "User Updated Succeesfully",
+        icon: "success",
+    });
+};  
   return (
     <>
       <Header />
 
-      <div>
-        <h1 className='text-purple-800 font-bold text-2xl text-center md:w-7/12 md:mx-8  py-0 md:mt-3'>Profile Page</h1>
-      </div>
-      <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-2 md:mt-1'>
+      
+      <div className='bg-purple-300 max-w-full min-h-screen'>
+ 
+          <div className="flex items-center justify-center ">
+            
+            <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-5'>
+              <h2 className="text-lg font-semibold mb-4"> Update Profile</h2>
+              <div className="space-y-4">
+                <form onSubmit={handleSubmit}>
+                  <div>
+                    <label htmlFor="fullname">Full Name</label>
+                    <TextField
+                      id="fullname"
+                      name="fullname"
+                      placeholder="Enter Your Full name"
+                      className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                      value={fullname}
+                      onChange={(e) => setFullName(e.target.value)}
+                    />
+                    {fullnamerror && <p className="text-red-500">{fullnamerror}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="email">Email</label>
+                    <TextField
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="Enter Your Email"
+                      className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                      value={email}
+                      onChange={(e) => SetEmail(e.target.value)}
+                    />
+                    {emailerror && <p className="text-red-500">{emailerror}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="phonenumber">Contact Number</label>
+                    <TextField
+                      id="phonenumber"
+                      name="phonenumber"
+                      placeholder="Enter Your Contact Number"
+                      className="border p-2 rounded-md focus:outline-none focus:border-blue-500 w-full"
+                      value={phonenumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                    {phonenumbererror && <p className="text-red-500">{phonenumbererror}</p>}
+                  </div>
+                
+              
 
-        <div className='mx-auto bg-white rounded-lg '>
-          <div className='mb-6 '>
-            <div className='grid grid-cols-2 gap-4 w-full'>
-              <div>
-                <label className='block text-sm font-medium text-gray-700'>
-                  Full Name
-                </label>
-                <TextField
-                  id='fullName'
-                  name='fullName'
-                  placeholder='Enter Your Full Name'
-                  className='mt-1 md:w-72'
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-                {fullNameError && <p className='text-red-500'>{fullNameError}</p>}
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700'>
-                  Email
-                </label>
-                <TextField
-                  id='email'
-                  name='email'
-                  placeholder='Enter Your Email'
-                  className='mt-1 md:w-72'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {emailError && <p className='text-red-500'>{emailError}</p>}
-              </div>
-            </div>
-          </div>
-
-          <div className='mb-6 '>
-            <div className='grid grid-cols-2 gap-4 w-full'>
-              <div>
-                <label className='block text-sm font-medium text-gray-700'>
-                  Contact Number
-                </label>
-                <TextField
-  id='contactnumber'
-  name='contactnumber'
-  placeholder='Enter Your contactnumber'
-  className='mt-1 md:w-72'
-  value={contactNumber}
-  onChange={(e) => setContactNumber(e.target.value)}
-  onKeyPress={(e) => {
-    const charCode = e.which ? e.which : e.keyCode;
-    if (charCode < 48 || charCode > 57) {
-      e.preventDefault();
-    }
-  }}
-/>
-                {contactNumberError && <p className='text-red-500'>{contactNumberError}</p>}
-              </div>
-            </div>
-          </div>
-
-          <button className='user_button bg-purple-500 text-white px-4 py-2 rounded w-40' onClick={handleUpdateProfile}>
-            Update
-          </button>
-
-          <div className='mt-6'>
-            <div className='grid grid-cols-2 gap-4'>
-              <div>
-                <label className='block text-sm font-medium text-gray-700'>
-                  Current Password
-                </label>
-                <TextField
-                  id='currentpassword'
-                  name='currentpassword'
-                  type='password'
-                  placeholder='Enter your Current Password'
-                  className='mt-1 md:w-72'
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                />
-                {currentPasswordError && <p className='text-red-500'>{currentPasswordError}</p>}
-              </div>
-            </div>
-          </div>
-
-          <div className='mt-6'>
-            <div className='grid grid-cols-2 gap-4'>
-              <div>
-                <label className='block text-sm font-medium text-gray-700'>
-                  New Password
-                </label>
-                <TextField
-                  id='newpassword'
-                  name='newpassword'
-                  type='password'
-                  placeholder='Enter your new Password'
-                  className='mt-1 md:w-72'
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                {newPasswordError && <p className='text-red-500'>{newPasswordError}</p>}
-              </div>
-              <div>
-                <label className='block text-sm font-medium text-gray-700'>
-                  Confirm Password
-                </label>
-                <TextField
-                  id='confirmpassword'
-                  name='confirmpassword'
-                  type='password'
-                  placeholder='Confirm Your Password'
-                  className='mt-1 md:w-72'
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                {confirmPasswordError && <p className='text-red-500'>{confirmPasswordError}</p>}
+                  <div>
+                    <label htmlFor='password'>Password:</label>
+                    <input
+                      type='password'
+                      id='password'
+                      className='border border-gray-300 p-1 w-full'
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    {passworderror && <p className="text-red-500">{passworderror}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor='confirmpassword'>Confirm Password:</label>
+                    <input
+                      type='password'
+                      id='confirmpassword'
+                      className='border border-gray-300 p-1 w-full'
+                      value={confirmpassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    {confirmpassworderror && <p className="text-red-500">{confirmpassworderror}</p>}
+                  </div>
+                  {/* ... other form fields */}
+                  <div className='flex flex-row justify-between md:mt-5'>
+                    <Link to={'/users/all'}>
+                      <button
+                        type="button"
+                        className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300  w-32"
+                      >
+                        Back
+                      </button>
+                    </Link>
+                    <div className='flex'>
+                      <button
+                        type="submit"
+                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-2 w-32"
+                      >
+                        Update User
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-
-          <button className='bg-purple-500 text-white px-4 py-2 rounded md:mt-5' onClick={handleUpdatePassword}>
-            Update Password
-          </button>
         </div>
-      </div>
     </>
   );
 };

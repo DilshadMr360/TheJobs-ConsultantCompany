@@ -5,8 +5,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@mui/material/Select';
 import { Link } from "react-router-dom";
-import Admin_header from '../../components/Admin_header';
 import MenuItem from '@mui/material/MenuItem';
+import Consultant_header from '../../components/Consultant_header';
 
 export default function () {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -81,13 +81,13 @@ export default function () {
 
     return (
         <>
-            <Admin_header />
+            <Consultant_header />
 
             <div className="user-navbar">
             </div>
 
             <div className="bg-purple-300 min-h-screen flex items-center justify-center">
-                <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:mt-3 '>
+                <div className='container w-full md:w-6/12 mx-auto rounded-lg border-purple-800 bg-white border-2 px-5 py-5 md:md- '>
                     <div>
                         <h4 className="text-gray-500 pb-2 border-b border-gray-500 font-bold inline-block">Your Upcoming Appointment</h4>
                     </div>
