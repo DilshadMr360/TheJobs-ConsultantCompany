@@ -37,6 +37,35 @@ const Appointment_table = ({ filter = 'all' }) => {
     });
   };
 
+  const approveAppointment = (id) => {
+    // Confirmation dialog box for approving appointment
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to approve appointment " + id + "?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No, cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const headers = {
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+        };
+        axios.get("http://localhost:8000/api/appointments/" + id + '/review?accept=true', { headers })
+          .then(response => {
+            console.log(response.data);
+            fetchAppointments();
+            // Show success modal
+            showAlert("Success", "Appointment has been approved successfully.", "success");
+          })
+          .catch(error => {
+            // Display error message in UI with setError
+            console.log(error);
+          });
+      }
+    });
+  };
+
   const deleteAppointment = (id) => {
     // Confirmation dialog box for deleting appointment
     Swal.fire({
@@ -64,36 +93,7 @@ const Appointment_table = ({ filter = 'all' }) => {
           });
       }
     });
-  }
-
-  const reviewAppointment = (id, accept = true) => {
-    // Confirmation dialog box for reviewing appointment
-    Swal.fire({
-      title: "Are you sure?",
-      text: `Do you want to ${accept ? "approve" : "reject"} appointment ${id}?`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Yes",
-      cancelButtonText: "No, cancel",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const headers = {
-          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-        };
-        axios.get("http://localhost:8000/api/appointments/" + id + '/review?accept=' + accept, { headers })
-          .then(response => {
-            console.log(response.data);
-            fetchAppointments();
-            // Show success modal
-            showAlert("Success", "Appointment has been approved successfully.", "success");
-          })
-          .catch(error => {
-            // Display error message in UI with setError
-            console.log(error);
-          });
-      }
-    });
-  }
+  };
 
   return (
     <table className='w-full md:mt-4'>
@@ -138,14 +138,14 @@ const Appointment_table = ({ filter = 'all' }) => {
                 <button
                   type="button"
                   className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
-    
+                  onClick={() => approveAppointment(appointment.id)} // Pass the appointment id
                 >
                   Approve
                 </button>
                 <button
                   type="button"
                   className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-4 w-32"
-             
+                  onClick={() => deleteAppointment(appointment.id)} // Pass the appointment id
                 >
                   Delete
                 </button>
