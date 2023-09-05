@@ -123,13 +123,13 @@ export default function () {
                   <h1 className='w-1/12'>{user.role}</h1>
                   <Link to={`/users/edit/${user.id}`}>
                     <button
-                      className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-8 w-32"
+                  className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
                     >
                       Edit User
                     </button>
                   </Link>
                   <button
-                    className=" bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-4 w-32"
                     onClick={() => {
                       deleteUser(user.id);
                     }}
@@ -154,7 +154,7 @@ export default function () {
                     type="submit"
                     className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
                   >
-                    Create a user
+                    Create a User
                   </button>
                 </Link>
               </div>
