@@ -130,7 +130,15 @@ const Profile_page = (props) => {
 
     
     if (valid) {
-      console.log("Updating user ....");
+      Swal.fire({
+        title: "Do you want to update this profile?",
+        showCancelButton: true,
+        confirmButtonText: "Yes, add user",
+        cancelButtonText: "No, cancel",
+        icon: "question",
+      }).then((result) => {
+        if (result.isConfirmed) {
+      console.log("Updating profile ....");
       const headers = {
         'Authorization': 'Bearer ' + localStorage.getItem('authToken')
       };
@@ -162,10 +170,12 @@ const Profile_page = (props) => {
           }
         });
     } else {
+      console.log("User canceled.");
+          }
+        });
+    } else {
       console.log("Invalid form");
     }
-  };
-
 
   const showAlert = () => {
     Swal.fire({
@@ -174,6 +184,8 @@ const Profile_page = (props) => {
         icon: "success",
     });
 };  
+};
+
   return (
     <>
          {user.role == 'admin' ?
