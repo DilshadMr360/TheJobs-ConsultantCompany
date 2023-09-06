@@ -42,7 +42,7 @@ export default function () {
                         </div>
 
                         <div className="flex flex-col space-y-4">
-                          <Appointment_table filter={filter}/>
+                            <Appointment_table filter={filter} />
                         </div>
                         {/* button */}
                         <div className='flex flex-row justify-between md:mt-5'>
@@ -54,16 +54,20 @@ export default function () {
                                     Dashboard
                                 </button>
                             </Link>
-                            <div className='flex'>
-                                <Link to={'/appointments/create'}>
-                                    <button
-                                        type="submit"
-                                        className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
-                                    >
-                                        New 
-                                    </button>
-                                </Link>
-                            </div>
+                            {user.role != 'consultant' ?
+                                <div className='flex'>
+                                    <Link to={'/appointments/create'}>
+                                        <button
+                                            type="submit"
+                                            className="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-950 focus:ring focus:ring-blue-300 ml-auto w-32"
+                                        >
+                                            New
+                                        </button>
+                                    </Link>
+                                </div>
+
+                                : null}
+
                         </div>
                     </div>
                 </div>

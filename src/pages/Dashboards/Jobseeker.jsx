@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Header from '../../components/Header';
 import axios from "axios";
 import { IoCheckboxSharp, IoTime } from 'react-icons/io5';
+import Appointment_table from '../../components/Appointments_table';
 
 
 const Jobseeker_dashboard = (props) => {
@@ -65,23 +66,7 @@ const Jobseeker_dashboard = (props) => {
                         </div>
 
                         <div className="min-h-[400px] md:mt-3">
-                            {appointments.length ? appointments.map((appointment) => (
-                                <div className="flex space-x-4 justify-center w-full text-gray-500 md:mt-2" key={appointment.id}>
-                                    <div className="flex border-2 border-gray-300 p-2 rounded-md w-full ">
-                                        <h1 className='w-2/12'>
-                                            {appointment.status === 'approved' ? (
-                                                <IoCheckboxSharp size={20} className='border-1 rounded-lg text-green-600' />
-                                            ) : (
-                                                <IoTime size={20} style={{ color: 'F29339' }} />
-                                            )}
-                                        </h1>
-                                        <h1 className='w-2/12'>{appointment.client.name}</h1>
-                                        <h1 className='w-2/12'>{appointment.consultant.name}</h1>
-                                        <h1 className='w-3/12'>{appointment.job.name}</h1>
-                                        <h1 className='w-3/12' >{appointment.time}</h1>
-                                    </div>
-                                </div>
-                            )) : "No appointments"}
+  <Appointment_table/>
                         </div>
 
                         <div className='flex flex-row justify-end'>

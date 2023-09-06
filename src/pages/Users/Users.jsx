@@ -123,7 +123,7 @@ export default function () {
                   <h1 className='w-1/12'>{user.role}</h1>
                   <Link to={`/users/edit/${user.id}`}>
                     <button
-                  className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
+                  className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-700 focus:ring focus:ring-blue-300 ml-auto w-32"
                     >
                       Edit User
                     </button>

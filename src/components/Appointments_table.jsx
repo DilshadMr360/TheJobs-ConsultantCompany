@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IoCheckboxSharp, IoTime } from 'react-icons/io5';
+import { IoCheckboxSharp, IoTime, IoCloseCircleSharp } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -66,6 +66,36 @@ const Appointment_table = ({ filter = 'all' }) => {
     });
   };
 
+  
+  const rejectAppointment = (id) => {
+    // Confirmation dialog box for approving appointment
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to Reject appointment " + id + "?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No, cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const headers = {
+          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+        };
+        axios.get("http://localhost:8000/api/appointments/" + id + '/review?accept=false', { headers })
+          .then(response => {
+            console.log(response.data);
+            fetchAppointments();
+            // Show success modal
+            showAlert("Success", "Appointment has been Rejected Successfully.", "success");
+          })
+          .catch(error => {
+            // Display error message in UI with setError
+            console.log(error);
+          });
+      }
+    });
+  };
+
   const deleteAppointment = (id) => {
     // Confirmation dialog box for deleting appointment
     Swal.fire({
@@ -120,6 +150,8 @@ const Appointment_table = ({ filter = 'all' }) => {
             <td className="py-5 ps-5">
               {appointment.status === 'approved' ? (
                 <IoCheckboxSharp size={20} className='border-1 rounded-lg text-green-600' />
+              ) : appointment.status === 'rejected' ? (
+                <IoCloseCircleSharp size={22} className='border-1 rounded-lg text-red-600 ' />
               ) : (
                 <IoTime size={20} style={{ color: 'F29339' }} />
               )}
@@ -133,22 +165,28 @@ const Appointment_table = ({ filter = 'all' }) => {
             <td>{appointment.country.name}</td>
             <td>{appointment.job.name}</td>
             <td>{appointment.time}</td>
-            {user.role === 'admin' && appointment.status !== 'approved' ? (
-              <td className='w-80'>
+            {user.role === 'admin' && appointment.status === 'pending' ? (
+              <td className='w-48'>
                 <button
                   type="button"
-                  className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32"
+                  className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32 mt-1"
                   onClick={() => approveAppointment(appointment.id)} // Pass the appointment id
                 >
                   Approve
                 </button>
                 <button
                   type="button"
-                  className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 ml-4 w-32"
+                  className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 w-32 mt-1"
+                  onClick={() => rejectAppointment(appointment.id)} // Pass the appointment id
+                >
+                  Reject
+                </button>
+                <button
+                  type="button"
+                  className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 w-32 mt-1 mb-1"
                   onClick={() => deleteAppointment(appointment.id)} // Pass the appointment id
                 >
-                  Delete
-                </button>
+                  Delete                </button>
               </td>
             ) : null}
           </tr>

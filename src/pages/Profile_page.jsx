@@ -6,6 +6,8 @@ import { Link, useParams,useNavigate} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import Admin_header from '../components/Admin_header';
+import Consultant_header from '../components/Consultant_header';
 
 const Profile_page = (props) => {
   const [fullname, setFullName] = useState('');
@@ -24,6 +26,7 @@ const Profile_page = (props) => {
 
   //getting the countirs for DB  and storing it as countires
   // store all the user selected countirs in selected countries
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -41,7 +44,7 @@ const Profile_page = (props) => {
       'Authorization': 'Bearer ' + localStorage.getItem('authToken')
     };
 
-    axios.get("http://localhost:8000/api/users/" + userId, { headers })
+    axios.get("http://localhost:8000/api/profile/" , { headers })
       .then(response => {
         let user = response.data.user;
         setFullName(user.name);
@@ -132,7 +135,7 @@ const Profile_page = (props) => {
         'Authorization': 'Bearer ' + localStorage.getItem('authToken')
       };
       console.log(headers);
-      axios.put('http://localhost:8000/api/users/' + userId, {
+      axios.put('http://localhost:8000/api/profile/', {
         name: fullname,
         email: email,
         phone: phonenumber,
@@ -173,7 +176,15 @@ const Profile_page = (props) => {
 };  
   return (
     <>
-      <Header />
+         {user.role == 'admin' ?
+                    <Admin_header/>
+                    : null}
+                {user.role == 'consultant' ?
+                    <Consultant_header />
+                    : null}
+                {user.role == 'client' ?
+                    <Header />
+                    : null}
 
       
       <div className='bg-purple-300 max-w-full min-h-screen'>
