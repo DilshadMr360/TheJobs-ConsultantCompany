@@ -100,7 +100,7 @@ export default function () {
             setConsultantError('');
         }
 
-        if (!selectedClient) {
+        if (!selectedClient && user.role == 'admin') {
             setClientsError('Choose Client Name');
             valid = false;
         } else {

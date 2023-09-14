@@ -123,7 +123,7 @@ const Register = (props) => {
               id="number"
               name="number"
               pattern="[0-9]*"
-              maxLength={10}
+              maxLength={16}
               className="border p-2 rounded-md focus:outline-none focus:border-purple-800"
 
             />
