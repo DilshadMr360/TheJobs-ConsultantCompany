@@ -27,14 +27,17 @@ const Notifications = () => {
   }, []);
 
   return (
-    <div className="absolute top-16 right-32 bg-slate-200 border-2 border-gray-300 rounded-md shadow-md min-h-[300px] p-3  w-4/12 z-10">
+    <div className="absolute top-16 right-32 bg-gray-50  rounded-md shadow-md min-h-[300px] w-4/12 z-10">
+    <div className="overflow-y-auto max-h-[300px] p-3"> 
       {notifications?.length > 0 ? notifications.map((notification) => (
-        <div className='border-2 border-gray-500 rounded-lg px-4 py-4 mb-4' key={notification.id}>
+        <div className='rounded-lg px-4 py-4 mb-4 bg-purple-200 ' key={notification.id}>
           <p>{notification.message}</p>
           <p>{notification.created_at}</p>
         </div>
       )) : "You have no notifications"}
     </div>
+  </div>
+  
   );
 };
 

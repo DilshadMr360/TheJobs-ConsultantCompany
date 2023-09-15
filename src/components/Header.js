@@ -50,9 +50,10 @@ const Header = () => {
         </div>
         <div className="flex items-center" ref={dropdownRef}>
           <div>
-            <button onClick={handleNotificationsToggle}>
-              <IoNotifications size={28} color="white" className="mx-5" />
-            </button>
+               <button onClick={handleNotificationsToggle} className="relative">
+  <IoNotifications size={28} color="white" className="mx-5" />
+  <div className="absolute top-0 right-6 h-2 w-2 bg-red-500 rounded-full"></div>
+</button>
             {showNotification && <Notifications />}
           </div>
           <span className="text-white mr-5">{user.name}</span>

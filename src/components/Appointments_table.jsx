@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IoCheckboxSharp, IoTime, IoCloseCircleSharp } from 'react-icons/io5';
+import { IoCheckboxSharp, IoTime, IoCloseCircleSharp,IoCheckmarkDoneSharp,IoCloseSharp,IoTrashSharp  } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -167,29 +167,32 @@ const Appointment_table = ({ filter = 'all' }) => {
         <td>{appointment.job.name}</td>
         <td>{appointment.time}</td>
         {user.role === 'admin' && appointment.status === 'pending' ? (
-          <td className='w-48'>
+          <td className='w-28'>
+          <div className="flex items-center space-x-2 md:mr-1">
             <button
               type="button"
-              className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300 ml-auto w-32 mt-1"
+              className="bg-green-700 text-white px-5 py-2 rounded-md hover:bg-green-800 focus:ring focus:ring-blue-300"
               onClick={() => approveAppointment(appointment.id)} // Pass the appointment id
             >
-              Approve
+              <IoCheckmarkDoneSharp size={20} className="mr-2" />
             </button>
             <button
               type="button"
-              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 w-32 mt-1"
+              className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300"
               onClick={() => rejectAppointment(appointment.id)} // Pass the appointment id
             >
-              Reject
+              <IoCloseSharp size={20} className="mr-2" />
             </button>
             <button
               type="button"
-              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 w-32 mt-1 mb-1"
+              className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 focus:ring focus:ring-blue-300 "
               onClick={() => deleteAppointment(appointment.id)} // Pass the appointment id
             >
-              Delete
+              <IoTrashSharp size={20} className="mr-2" />
             </button>
-          </td>
+          </div>
+        </td>
+        
         ) : null}
       </tr>
     ))
