@@ -4,30 +4,45 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
+
 const Appointment_table = ({ filter = 'all' }) => {
   const [appointments, setAppointments] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();
+  const [filterSearch, setFilterSearch] = useState('');
+  const [filterAppointmentStatus, setFilterAppointmentStatus] = useState('all');
 
-  const fetchAppointments = () => {
-    const headers = {
-      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-    };
 
-    axios.get("http://localhost:8000/api/appointments?status=" + filter, { headers })
-      .then(response => {
-        console.log(response.data);
-        setAppointments(response.data.appointments);
-      })
-      .catch(error => {
-        console.log(error);
-        // display error message in UI with setError
-      });
-  }
+
+const fetchAppointments = () => {
+  const headers = {
+    'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+  };
+
+  const queryParams = {
+    status: filter, // Status filter
+    search: filterSearch, // Search filter
+  };
+
+  console.log("Query Params:", queryParams); // Check what's being sent to the server
+
+  axios.get("http://localhost:8000/api/appointments", { params: queryParams, headers })
+    .then(response => {
+      console.log(response.data); // Check what's being received from the server
+      setAppointments(response.data.appointments);
+    })
+    .catch(error => {
+      console.log("Error:", error);
+      // display error message in UI with setError
+    });
+}
+
+
 
   useEffect(() => {
     fetchAppointments();
-  }, [filter]);
+  }, [filter, filterSearch]);
 
   const showAlert = (title, text, icon) => {
     Swal.fire({
@@ -126,6 +141,8 @@ const Appointment_table = ({ filter = 'all' }) => {
   };
 
   return (
+    <div className="max-h-[350px] overflow-y-auto border border-gray-300 rounded-lg">
+
     <table className='w-full md:mt-4'>
       <thead>
         <tr className="text-left">
@@ -204,6 +221,7 @@ const Appointment_table = ({ filter = 'all' }) => {
 </tbody>
 
     </table>
+    </div>
   );
 };
 
