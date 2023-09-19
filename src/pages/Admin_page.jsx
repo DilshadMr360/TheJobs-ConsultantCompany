@@ -43,7 +43,7 @@ const Admin_page = (props) => {
       </div>
     </div>
 
-    <div className='text-center border-2  px-5 mt-5 pb-5 w-full'>
+    <div className='text-center border-2  px-5 mt-5 pb-5 w-full '>
       <h1 className='justify-center text-purple-950 font-bold text-2xl md:mt-5'>YOUR RECENT APPLICATIONS</h1>
       <div className="flex border-2 border-gray-300 p-2 rounded-md md:mt-5 px-5 py-5">
 

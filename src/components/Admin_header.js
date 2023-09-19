@@ -55,10 +55,7 @@ const Admin_header = () => {
         </div>
         <div className="flex items-center" ref={dropdownRef}>
           <div>
-            <button onClick={handleNotificationsToggle}>
-              <IoNotifications size={28} color="white" className="mx-5" />
-            </button>
-            {showNotification && <Notifications />}
+            <Notifications />
           </div>
           <span className="text-white mr-5">{user.name}</span>
           <button onClick={handleDropdownToggle} className="flex items-center">

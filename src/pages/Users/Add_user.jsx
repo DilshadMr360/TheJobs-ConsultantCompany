@@ -69,7 +69,7 @@ const Add_user = () => {
   };
   
   const validateJobFields = () => {
-    if (selectedRole === 'consultant' && jobFields.length === 0) {
+    if (selectedRole === 'consultant' && selectedJobs.length === 0) {
       setJobFieldsError('Please enter the job fields.');
       return false;
     } else {

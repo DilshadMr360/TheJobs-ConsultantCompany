@@ -100,7 +100,7 @@ export default function () {
             setConsultantError('');
         }
 
-        if (!selectedClient) {
+        if (!selectedClient && user.role == 'admin') {
             setClientsError('Choose Client Name');
             valid = false;
         } else {
@@ -113,7 +113,7 @@ export default function () {
             Swal.fire({
                 title: "Do you want to create an appointment?",
                 showCancelButton: true,
-                confirmButtonText: "Yes, add user",
+                confirmButtonText: "Yes, add appointment",
                 cancelButtonText: "No, cancel",
                 icon: "question",
             }).then((result) => {

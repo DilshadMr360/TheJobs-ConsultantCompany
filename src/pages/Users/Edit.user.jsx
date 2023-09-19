@@ -78,7 +78,7 @@ const Edit_User = () => {
   };
 
   const validateSpecializedCountry = () => {
-    if (selectedRole === 'consultant' && !selectedCountries.length === 0) {
+    if (selectedRole == 'consultant' && selectedCountries.length == 0) {
       setSpecializedCountryError('Please select a country.');
       return false;
     } else {
@@ -88,7 +88,7 @@ const Edit_User = () => {
   };
 
 const validateJobFields = () => {
-  if (selectedRole === 'consultant' && !jobFields.length === 0) {
+  if (selectedRole == 'consultant' && selectedJobs.length == 0) {
     setJobFieldsError('Please enter the job fields.');
     return false;
   } else {
@@ -279,8 +279,8 @@ const validateJobFields = () => {
                         <em>Select a Role</em>
                       </MenuItem>
                       <MenuItem value="admin">Admin</MenuItem>
-                      <MenuItem value="consultant">Consultants</MenuItem>
-                      <MenuItem value="client">Job Seekers</MenuItem>
+                      <MenuItem value="consultant">Consultant</MenuItem>
+                      <MenuItem value="client">Job Seeker</MenuItem>
                     </Select>
                   </div>
                   {roleError && <p className="text-red-500">{roleError}</p>}
