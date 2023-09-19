@@ -12,31 +12,7 @@ import axios from 'axios';
 export default function () {
     const [filter, setFilter] = useState('all');
     const [filterSearch, setFilterSearch] = useState('');
-
     const user = JSON.parse(localStorage.getItem('user'));
-
-    const fetchAppointments = () => {
-        const headers = {
-          'Authorization': 'Bearer ' + localStorage.getItem('authToken')
-        };
-    
-        axios.get("http://localhost:8000/api/appointments?status=" + filter + "&search=" + filterSearch, { headers })
-
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-            // display error message in UI with setError
-          });
-          console.log("Fetching appointments with filter:", filter, "and filterSearch:", filterSearch);
-      }
-    
-      useEffect(() => {
-        fetchAppointments();
-      }, [filter, filterSearch]);
-    
-
 
     return (
         <>

@@ -117,7 +117,7 @@ export default function () {
               </div>
             </div>
             <div className="user-list-container" style={{ maxHeight: '300px', overflowY: 'auto' }}>
-            {users ? users.map((user) => (
+            {users.length ? users.map((user) => (
               <div className="flex space-x-4 justify-center w-full text-gray-500">
                 <div className="flex border-2 border-gray-300 p-2 rounded-md w-full my-1">
                   <h1 className='w-3/12'>{user.name}</h1>

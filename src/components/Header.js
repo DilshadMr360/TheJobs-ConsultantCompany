@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { IoAirplaneSharp, IoHomeOutline, IoPersonCircleOutline, IoNotifications } from 'react-icons/io5'; 
+import { IoAirplaneSharp, IoHomeOutline, IoPersonCircleOutline, IoNotifications } from 'react-icons/io5';
 import DropdownMenu from './Dropdownmenu';
 import Notifications from './Notifications';
 import { Link } from 'react-router-dom';
@@ -50,11 +50,7 @@ const Header = () => {
         </div>
         <div className="flex items-center" ref={dropdownRef}>
           <div>
-               <button onClick={handleNotificationsToggle} className="relative">
-  <IoNotifications size={28} color="white" className="mx-5" />
-  <div className="absolute top-0 right-6 h-2 w-2 bg-red-500 rounded-full"></div>
-</button>
-            {showNotification && <Notifications />}
+            <Notifications />
           </div>
           <span className="text-white mr-5">{user.name}</span>
           <button onClick={handleDropdownToggle} className="flex items-center">
